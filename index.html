@@ -3,57 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campaign Command & Voter Hub</title>
+    <title>Community Pulse & Governance Hub</title>
+    <!-- Tailwind CSS Engine -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Chart.js for premium vector analytics -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { -webkit-font-smoothing: antialiased; }
-        /* Honeypot hidden style */
-        .hidden-field { display: none !important; tab-index: -1; autocomplete: off; }
+        .hidden-field { display: none !important; position: absolute; left: -9999px; }
     </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-900">
+<body class="bg-slate-50 font-sans text-slate-900 flex flex-col min-h-screen">
 
-    <!-- Navigation -->
-    <header class="bg-white/80 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-50">
+    <!-- Top Sticky Premium Navigation Bar -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-50">
         <div class="max-w-xl mx-auto px-5 py-3.5 flex justify-between items-center">
             <div class="flex items-center gap-2">
                 <span class="text-xl">🇿🇲</span>
-                <span class="font-bold tracking-tight text-slate-900 text-base">VoterPulse Premium</span>
+                <span class="font-bold tracking-tight text-slate-900 text-base">CivicPulse</span>
             </div>
-            <span class="bg-emerald-50 border border-emerald-200/60 text-[11px] font-medium text-emerald-700 px-2.5 py-1 rounded-full">Secure Node</span>
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 bg-indigo-50 border border-indigo-100 text-[11px] font-semibold text-indigo-700 px-3 py-1 rounded-full">
+                    <span class="h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
+                    Constituent Portal
+                </span>
+            </div>
         </div>
     </header>
 
-    <main class="max-w-xl mx-auto px-4 py-6 space-y-6">
+    <!-- Main Content Stream -->
+    <main class="flex-grow max-w-xl w-full mx-auto px-4 py-6 space-y-6">
         
-        <!-- Campaign Dispatch Feed -->
+        <!-- Hero Identity Banner -->
+        <section class="bg-slate-900 text-white p-6 rounded-2xl border border-slate-800 shadow-xs">
+            <span class="text-[10px] uppercase tracking-widest font-bold text-indigo-400 mb-1 block">Accountability Platform</span>
+            <h1 class="text-xl font-extrabold tracking-tight text-white mb-1.5">Direct Community Connection</h1>
+            <p class="text-slate-300 text-xs leading-relaxed">
+                Use this portal to view verified field updates from leadership and submit direct localized developmental challenges happening within your constituency.
+            </p>
+        </section>
+
+        <!-- Module 1: Official Dispatches & Project Tracking -->
         <section class="bg-white rounded-2xl p-5 border border-slate-200/70 shadow-xs">
-            <h2 class="text-base font-bold text-slate-900 mb-3">Campaign Dispatch</h2>
-            <div id="feedContainer" class="space-y-4">
-                <p class="text-xs text-slate-400 animate-pulse">Syncing feed arrays...</p>
+            <div class="mb-4">
+                <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wide">📢 Leadership Dispatch & Tracker</h2>
+                <p class="text-xs text-slate-500">Official updates, CDF project milestones, and notices.</p>
+            </div>
+            
+            <div id="feedContainer" class="space-y-3">
+                <!-- Fallback Loading State -->
+                <div class="py-4 text-center space-y-2">
+                    <div class="h-3 w-3/4 bg-slate-100 rounded-sm mx-auto animate-pulse"></div>
+                    <div class="h-2.5 w-1/2 bg-slate-50 rounded-sm mx-auto animate-pulse"></div>
+                </div>
             </div>
         </section>
 
-        <!-- Interactive Form Terminal -->
+        <!-- Module 2: Long-Term Governance Data Logging -->
         <section class="bg-white rounded-2xl p-5 border border-slate-200/70 shadow-xs">
             <div class="mb-4">
-                <h2 class="text-base font-bold text-slate-900">Voice Your Priorities</h2>
-                <p class="text-xs text-slate-500">Encrypted, multi-tier anonymous deployment.</p>
+                <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wide">🛠️ Report a Local Priority Issue</h2>
+                <p class="text-xs text-slate-500">Log developmental gaps or infrastructure needs directly into the database.</p>
             </div>
 
             <form id="pulseForm" class="space-y-4">
                 
-                <!-- SECURITY: Honeypot Anti-Spam Field (Hidden from humans) -->
+                <!-- Anti-Spam Honeypot Field -->
                 <div class="hidden-field">
-                    <label>Leave this field completely blank</label>
-                    <input type="text" id="username_verification" value="">
+                    <input type="text" id="username_verification" autocomplete="off">
                 </div>
 
-                <!-- Dropdown Tier 1: Province -->
+                <!-- Chained Dropdown 1: Province -->
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Province</label>
-                    <select id="province" required class="w-full text-sm p-3 border border-slate-200 rounded-xl bg-slate-50/50 font-medium transition-all outline-none focus:border-emerald-500">
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Province</label>
+                    <select id="province" required class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50/50 font-medium transition-all outline-none focus:border-indigo-500">
                         <option value="">Select Province...</option>
                         <option value="Copperbelt">Copperbelt Province</option>
                         <option value="Lusaka">Lusaka Province</option>
@@ -62,108 +85,122 @@
                     </select>
                 </div>
 
-                <!-- Dropdown Tier 2: Dynamic Constituency -->
+                <!-- Chained Dropdown 2: Constituency -->
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Constituency</label>
-                    <select id="constituency" required disabled class="w-full text-sm p-3 border border-slate-200 rounded-xl bg-slate-50/50 font-medium transition-all outline-none focus:border-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Constituency</label>
+                    <select id="constituency" required disabled class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50/50 font-medium transition-all outline-none focus:border-indigo-500 disabled:opacity-40">
                         <option value="">Select a Province first...</option>
                     </select>
                 </div>
 
-                <!-- Priority Issue -->
+                <!-- Multi-Lifecycle Categories (Elections -> Long Term Office) -->
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Primary Core Concern</label>
-                    <select id="topIssue" required class="w-full text-sm p-3 border border-slate-200 rounded-xl bg-slate-50/50 font-medium transition-all outline-none focus:border-emerald-500">
-                        <option value="">Select Priority Issue...</option>
-                        <option value="Cost of Living">Cost of Living & Inflation</option>
-                        <option value="Employment">Job Creation & Youth Work</option>
-                        <option value="Agriculture">FISP Support & Maize Production</option>
-                        <option value="Healthcare">Medicine Access & Local Clinics</option>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Sector Demanding Intervention</label>
+                    <select id="topIssue" required class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50/50 font-medium transition-all outline-none focus:border-indigo-500">
+                        <option value="">Select Sector...</option>
+                        <option value="Water & Sanitation">Water Supply & Sanitation</option>
+                        <option value="Roads & Drainage">Feeder Roads & Drainage Works</option>
+                        <option value="Health Services">Clinic Infrastructure & Drugs Availability</option>
+                        <option value="Education Facilities">School Desk Allocation & Classroom Space</option>
+                        <option value="Security & Lighting">Street Lights & Community Policing</option>
+                        <option value="Youth & Women Grants">CDF Empowerment Grants / Skills Training</option>
                     </select>
                 </div>
 
-                <!-- Radio Mood Selection -->
+                <!-- Impact Urgency Matrix -->
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Campaign Direction Mood</label>
+                    <label class="block text-xs font-semibold text-slate-500 mb-2">Severity Level of the Situation</label>
                     <div class="grid grid-cols-5 gap-2">
-                        <label class="relative flex flex-col items-center p-2.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
+                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
                             <input type="radio" name="sentiment" value="1" required class="peer absolute opacity-0">
-                            <span class="text-lg filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">😡</span>
-                            <span class="text-[10px] font-medium text-slate-400 mt-1">Angry</span>
+                            <span class="text-base filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">🟢</span>
+                            <span class="text-[9px] font-bold text-slate-400 mt-1">Stable</span>
                             <div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div>
                         </label>
-                        <label class="relative flex flex-col items-center p-2.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
+                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
                             <input type="radio" name="sentiment" value="2" class="peer absolute opacity-0">
-                            <span class="text-lg filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">😟</span>
-                            <span class="text-[10px] font-medium text-slate-400 mt-1">Worried</span>
+                            <span class="text-base filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">🟡</span>
+                            <span class="text-[9px] font-bold text-slate-400 mt-1">Minor</span>
                             <div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div>
                         </label>
-                        <label class="relative flex flex-col items-center p-2.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
+                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
                             <input type="radio" name="sentiment" value="3" class="peer absolute opacity-0">
-                            <span class="text-lg filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">😐</span>
-                            <span class="text-[10px] font-medium text-slate-400 mt-1">Neutral</span>
+                            <span class="text-base filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">🟠</span>
+                            <span class="text-[9px] font-bold text-slate-400 mt-1">Moderate</span>
                             <div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div>
                         </label>
-                        <label class="relative flex flex-col items-center p-2.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
+                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
                             <input type="radio" name="sentiment" value="4" class="peer absolute opacity-0">
-                            <span class="text-lg filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">🙂</span>
-                            <span class="text-[10px] font-medium text-slate-400 mt-1">Hopeful</span>
+                            <span class="text-base filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">🚨</span>
+                            <span class="text-[9px] font-bold text-slate-400 mt-1">Severe</span>
                             <div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div>
                         </label>
-                        <label class="relative flex flex-col items-center p-2.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
+                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
                             <input type="radio" name="sentiment" value="5" class="peer absolute opacity-0">
-                            <span class="text-lg filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">🔥</span>
-                            <span class="text-[10px] font-medium text-slate-400 mt-1">Excited</span>
+                            <span class="text-base filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">💥</span>
+                            <span class="text-[9px] font-bold text-slate-400 mt-1">Critical</span>
                             <div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div>
                         </label>
                     </div>
                 </div>
 
-                <!-- Open Comment Field -->
+                <!-- Structured Verbatim Field -->
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Direct Message to HQ</label>
-                    <textarea id="comments" rows="3" placeholder="Type in English, Bemba, Nyanja..." class="w-full text-sm p-3 border border-slate-200 rounded-xl bg-slate-50/50 outline-none focus:border-emerald-500 transition-all resize-none"></textarea>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Accurate Location Details & Description</label>
+                    <textarea id="comments" required rows="3" placeholder="Provide specific street landmarks or ward names (e.g., Kapisha, Nchanga Ward, Maiteneke)..." class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50/50 outline-none focus:border-indigo-500 transition-all resize-none"></textarea>
                 </div>
 
-                <button type="submit" id="submitBtn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-3.5 px-4 rounded-xl cursor-pointer transition-all">
-                    Transmit Anonymously
+                <button type="submit" id="submitBtn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs py-3.5 px-4 rounded-xl cursor-pointer transition-all active:scale-[0.99]">
+                    Log Issue with Administration
                 </button>
             </form>
         </section>
 
-        <!-- Metrics Dashboard -->
+        <!-- National Metrics Visualization Dashboard -->
         <section class="bg-white rounded-2xl p-5 border border-slate-200/70 shadow-xs">
-            <h2 class="text-base font-bold text-slate-900 mb-4">National Sentiment Index</h2>
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wide">📊 Live Constituency Health Metrics</h2>
+                    <p class="text-xs text-slate-500">Distribution of public severity alerts logged to date.</p>
+                </div>
+                <button onclick="loadDashboardData()" class="text-[10px] font-bold text-slate-700 bg-slate-50 border border-slate-200 px-2.5 py-1.5 rounded-lg hover:bg-slate-100 transition-all cursor-pointer">
+                    Sync Engine
+                </button>
+            </div>
+            
             <div class="w-full flex justify-center items-center">
-                <div class="w-full max-w-[240px] aspect-square">
+                <div class="w-full max-w-[210px] aspect-square">
                     <canvas id="moodChart"></canvas>
                 </div>
             </div>
         </section>
-        <!-- Premium Minimalist Footer Branding -->
-<footer class="mt-12 py-6 border-t border-slate-200/60 text-center space-y-1.5">
-    <p class="text-[11px] font-medium uppercase tracking-widest text-slate-400">
-        Engineered & Secured by
-    </p>
-    <div class="flex items-center justify-center gap-1.5">
-        <!-- Subtle Purple Tech Accent to match Vyeta Identity -->
-        <span class="h-2 w-2 rounded-full bg-indigo-600 shadow-[0_0_8px_rgba(79,70,229,0.6)]"></span>
-        <span class="text-xs font-bold tracking-tight text-slate-700">
-            Vyeta Digital Solutions
-        </span>
-    </div>
-    <p class="text-[10px] text-slate-400/80 font-mono">
-        Digital Infrastructure & Data Sovereignty © 2026
-    </p>
-</footer>
-
     </main>
 
+    <!-- PREMIUM WHITE-LABEL FOOTER BRANDING ANCHOR -->
+    <footer class="w-full bg-white border-t border-slate-200/60 py-6 mt-12">
+        <div class="max-w-xl mx-auto px-4 text-center space-y-1.5">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                Engineered & Secured by
+            </p>
+            <div class="flex items-center justify-center gap-1.5">
+                <span class="h-2 w-2 rounded-full bg-indigo-600 shadow-[0_0_8px_rgba(79,70,229,0.6)]"></span>
+                <span class="text-xs font-extrabold tracking-tight text-slate-700">
+                    Vyeta Digital Solutions
+                </span>
+            </div>
+            <p class="text-[9px] text-slate-400 font-mono">
+                Digital Infrastructure & Data Sovereignty © 2026
+            </p>
+        </div>
+    </footer>
+
+    <!-- Script Application Logic -->
     <script>
+        // CRITICAL: Insert your Google Apps Script Web App Deployment URL below
         const APPS_SCRIPT_URL = "YOUR_APPS_SCRIPT_WEB_APP_URL";
         let moodChartInstance = null;
 
-        // Regional Mapping Data
+        // Regional Mapping Architecture
         const zambiaRegions = {
             "Copperbelt": ["Chingola", "Nchanga", "Kitwe Central", "Kwacha", "Nkana", "Luanshya", "Roan", "Mufulira", "Ndola Central", "Bwana Mkubwa"],
             "Lusaka": ["Munali", "Kanyama", "Matero", "Lusaka Central", "Chawama", "Mandevu", "Kabwata", "Rufunsa", "Chongwe"],
@@ -171,7 +208,7 @@
             "Southern": ["Livingstone", "Choma Central", "Mazabuka Central", "Monze Central"]
         };
 
-        // Chained Dropdown Logic
+        // Chained Dropdown Execution
         document.getElementById('province').addEventListener('change', function() {
             const constituencySelect = document.getElementById('constituency');
             const selectedProvince = this.value;
@@ -187,6 +224,7 @@
                     constituencySelect.appendChild(opt);
                 });
             } else {
+                const constituencySelect = document.getElementById('constituency');
                 constituencySelect.disabled = true;
                 constituencySelect.innerHTML = '<option value="">Select a Province first...</option>';
             }
@@ -198,16 +236,13 @@
             document.getElementById('pulseForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
-                // SECURITY: Verify Honeypot
+                // SECURITY HONEYPOT AUDIT
                 const botTrigger = document.getElementById('username_verification').value;
-                if(botTrigger !== "") {
-                    console.warn("Spam execution drop.");
-                    return; // Fail silent to confuse the bot
-                }
+                if(botTrigger !== "") { return; }
 
                 const submitBtn = document.getElementById('submitBtn');
                 submitBtn.disabled = true;
-                submitBtn.innerText = "Syncing with Command Alpha...";
+                submitBtn.innerText = "Encrypting Data Streams...";
 
                 const payload = {
                     province: document.getElementById('province').value,
@@ -215,7 +250,7 @@
                     topIssue: document.getElementById('topIssue').value,
                     sentimentScore: Number(document.querySelector('input[name="sentiment"]:checked').value),
                     comments: document.getElementById('comments').value,
-                    spamCheck: botTrigger // Sent down for backend confirmation evaluation
+                    spamCheck: botTrigger
                 };
 
                 try {
@@ -226,15 +261,15 @@
                         body: JSON.stringify(payload)
                     });
 
-                    alert("Zikomo! Telemetry mapped securely.");
+                    alert("Zikomo! Your report has been logged securely into the community database.");
                     document.getElementById('pulseForm').reset();
                     document.getElementById('constituency').disabled = true;
                     setTimeout(loadDashboardData, 1200);
                 } catch (error) {
-                    alert("Sync infrastructure delay. Try shortly.");
+                    alert("Sync infrastructure error. Try shortly.");
                 } finally {
                     submitBtn.disabled = false;
-                    submitBtn.innerText = "Transmit Anonymously";
+                    submitBtn.innerText = "Log Issue with Administration";
                 }
             });
         });
@@ -253,16 +288,19 @@
             const container = document.getElementById('feedContainer');
             container.innerHTML = "";
             if (!posts || posts.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 py-2 text-center">No active alerts running.</p>`;
+                container.innerHTML = `<p class="text-[11px] text-slate-400 py-2 text-center">No structural statements issued yet for this term.</p>`;
                 return;
             }
             posts.forEach(post => {
                 const div = document.createElement('div');
                 div.className = "p-4 bg-slate-50 rounded-xl border border-slate-150";
                 div.innerHTML = `
-                    <div class="flex items-center gap-2 mb-1.5"><span class="bg-slate-900 text-white text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded-sm">${post.category}</span><span class="text-[10px] text-slate-400">${post.date}</span></div>
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <span class="bg-indigo-600 text-white text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded-xs">${post.category}</span>
+                        <span class="text-[10px] text-slate-400 font-medium">${post.date}</span>
+                    </div>
                     <h3 class="text-xs font-bold text-slate-900 mb-1">${post.title}</h3>
-                    <p class="text-slate-600 text-xs leading-relaxed">${post.content}</p>
+                    <p class="text-slate-600 text-[11px] leading-relaxed whitespace-pre-line">${post.content}</p>
                 `;
                 container.appendChild(div);
             });
@@ -274,14 +312,14 @@
             moodChartInstance = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Angry', 'Worried', 'Neutral', 'Hopeful', 'Excited'],
+                    labels: ['Stable', 'Minor', 'Moderate', 'Severe', 'Critical'],
                     datasets: [{
                         data: [distribution['1']||0, distribution['2']||0, distribution['3']||0, distribution['4']||0, distribution['5']||0],
-                        backgroundColor: ['#f87171', '#fb923c', '#fbbf24', '#60a5fa', '#34d399'],
-                        borderWidth: 3
+                        backgroundColor: ['#34d399', '#fbbf24', '#f97316', '#ef4444', '#7f1d1d'],
+                        borderWidth: 2
                     }]
                 },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 6, usePointStyle: true, font: { size: 10 } } } }, cutout: '76%' }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 6, usePointStyle: true, font: { size: 9, weight: '500' } } } }, cutout: '78%' }
             });
         }
     </script>
