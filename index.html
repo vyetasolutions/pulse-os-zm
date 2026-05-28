@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Command & Voter Hub</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { -webkit-font-smoothing: antialiased; }
+        /* Honeypot hidden style */
+        .hidden-field { display: none !important; tab-index: -1; autocomplete: off; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-900">
+
+    <!-- Navigation -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-50">
+        <div class="max-w-xl mx-auto px-5 py-3.5 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-xl">🇿🇲</span>
+                <span class="font-bold tracking-tight text-slate-900 text-base">VoterPulse Premium</span>
+            </div>
+            <span class="bg-emerald-50 border border-emerald-200/60 text-[11px] font-medium text-emerald-700 px-2.5 py-1 rounded-full">Secure Node</span>
+        </div>
+    </header>
+
+    <main class="max-w-xl mx-auto px-4 py-6 space-y-6">
+        
+        <!-- Campaign Dispatch Feed -->
+        <section class="bg-white rounded-2xl p-5 border border-slate-200/70 shadow-xs">
+            <h2 class="text-base font-bold text-slate-900 mb-3">Campaign Dispatch</h2>
+            <div id="feedContainer" class="space-y-4">
+                <p class="text-xs text-slate-400 animate-pulse">Syncing feed arrays...</p>
+            </div>
+        </section>
+
+        <!-- Interactive Form Terminal -->
+        <section class="bg-white rounded-2xl p-5 border border-slate-200/70 shadow-xs">
+            <div class="mb-4">
+                <h2 class="text-base font-bold text-slate-900">Voice Your Priorities</h2>
+                <p class="text-xs text-slate-500">Encrypted, multi-tier anonymous deployment.</p>
+            </div>
+
+            <form id="pulseForm" class="space-y-4">
+                
+                <!-- SECURITY: Honeypot Anti-Spam Field (Hidden from humans) -->
+                <div class="hidden-field">
+                    <label>Leave this field completely blank</label>
+                    <input type="text" id="username_verification" value="">
+                </div>
+
+                <!-- Dropdown Tier 1: Province -->
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Province</label>
+                    <select id="province" required class="w-full text-sm p-3 border border-slate-200 rounded-xl bg-slate-50/50 font-medium transition-all outline-none focus:border-emerald-500">
+                        <option value="">Select Province...</option>
+                        <option value="Copperbelt">Copperbelt Province</option>
+                        <option value="Lusaka">Lusaka Province</option>
+                        <option value="Central">Central Province</option>
+                        <option value="Southern">Southern Province</option>
+                    </select>
+                </div>
+
+                <!-- Dropdown Tier 2: Dynamic Constituency -->
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Constituency</label>
+                    <select id="constituency" required disabled class="w-full text-sm p-3 border border-slate-200 rounded-xl bg-slate-50/50 font-medium transition-all outline-none focus:border-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <option value="">Select a Province first...</option>
+                    </select>
+                </div>
+
+                <!-- Priority Issue -->
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Primary Core Concern</label>
+                    <select id="topIssue" required class="w-full text-sm p-3 border border-slate-200 rounded-xl bg-slate-50/50 font-medium transition-all outline-none focus:border-emerald-500">
+                        <option value="">Select Priority Issue...</option>
+                        <option value="Cost of Living">Cost of Living & Inflation</option>
+                        <option value="Employment">Job Creation & Youth Work</option>
+                        <option value="Agriculture">FISP Support & Maize Production</option>
+                        <option value="Healthcare">Medicine Access & Local Clinics</option>
+                    </select>
+                </div>
+
+                <!-- Radio Mood Selection -->
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Campaign Direction Mood</label>
+                    <div class="grid grid-cols-5 gap-2">
+                        <label class="relative flex flex-col items-center p-2.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
+                            <input type="radio" name="sentiment" value="1" required class="peer absolute opacity-0">
+                            <span class="text-lg filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">😡</span>
+                            <span class="text-[10px] font-medium text-slate-400 mt-1">Angry</span>
+                            <div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div>
+                        </label>
+                        <label class="relative flex flex-col items-center p-2.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
+                            <input type="radio" name="sentiment" value="2" class="peer absolute opacity-0">
+                            <span class="text-lg filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">😟</span>
+                            <span class="text-[10px] font-medium text-slate-400 mt-1">Worried</span>
+                            <div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div>
+                        </label>
+                        <label class="relative flex flex-col items-center p-2.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
+                            <input type="radio" name="sentiment" value="3" class="peer absolute opacity-0">
+                            <span class="text-lg filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">😐</span>
+                            <span class="text-[10px] font-medium text-slate-400 mt-1">Neutral</span>
+                            <div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div>
+                        </label>
+                        <label class="relative flex flex-col items-center p-2.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
+                            <input type="radio" name="sentiment" value="4" class="peer absolute opacity-0">
+                            <span class="text-lg filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">🙂</span>
+                            <span class="text-[10px] font-medium text-slate-400 mt-1">Hopeful</span>
+                            <div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div>
+                        </label>
+                        <label class="relative flex flex-col items-center p-2.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
+                            <input type="radio" name="sentiment" value="5" class="peer absolute opacity-0">
+                            <span class="text-lg filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">🔥</span>
+                            <span class="text-[10px] font-medium text-slate-400 mt-1">Excited</span>
+                            <div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Open Comment Field -->
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Direct Message to HQ</label>
+                    <textarea id="comments" rows="3" placeholder="Type in English, Bemba, Nyanja..." class="w-full text-sm p-3 border border-slate-200 rounded-xl bg-slate-50/50 outline-none focus:border-emerald-500 transition-all resize-none"></textarea>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-3.5 px-4 rounded-xl cursor-pointer transition-all">
+                    Transmit Anonymously
+                </button>
+            </form>
+        </section>
+
+        <!-- Metrics Dashboard -->
+        <section class="bg-white rounded-2xl p-5 border border-slate-200/70 shadow-xs">
+            <h2 class="text-base font-bold text-slate-900 mb-4">National Sentiment Index</h2>
+            <div class="w-full flex justify-center items-center">
+                <div class="w-full max-w-[240px] aspect-square">
+                    <canvas id="moodChart"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const APPS_SCRIPT_URL = "YOUR_APPS_SCRIPT_WEB_APP_URL";
+        let moodChartInstance = null;
+
+        // Regional Mapping Data
+        const zambiaRegions = {
+            "Copperbelt": ["Chingola", "Nchanga", "Kitwe Central", "Kwacha", "Nkana", "Luanshya", "Roan", "Mufulira", "Ndola Central", "Bwana Mkubwa"],
+            "Lusaka": ["Munali", "Kanyama", "Matero", "Lusaka Central", "Chawama", "Mandevu", "Kabwata", "Rufunsa", "Chongwe"],
+            "Central": ["Kabwe Central", "Bwacha", "Chisamba", "Kapiri Mposhi", "Mumbwa"],
+            "Southern": ["Livingstone", "Choma Central", "Mazabuka Central", "Monze Central"]
+        };
+
+        // Chained Dropdown Logic
+        document.getElementById('province').addEventListener('change', function() {
+            const constituencySelect = document.getElementById('constituency');
+            const selectedProvince = this.value;
+
+            constituencySelect.innerHTML = '<option value="">Select Constituency...</option>';
+            
+            if(selectedProvince && zambiaRegions[selectedProvince]) {
+                constituencySelect.disabled = false;
+                zambiaRegions[selectedProvince].forEach(con => {
+                    const opt = document.createElement('option');
+                    opt.value = con;
+                    opt.textContent = con;
+                    constituencySelect.appendChild(opt);
+                });
+            } else {
+                constituencySelect.disabled = true;
+                constituencySelect.innerHTML = '<option value="">Select a Province first...</option>';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDashboardData();
+            
+            document.getElementById('pulseForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                // SECURITY: Verify Honeypot
+                const botTrigger = document.getElementById('username_verification').value;
+                if(botTrigger !== "") {
+                    console.warn("Spam execution drop.");
+                    return; // Fail silent to confuse the bot
+                }
+
+                const submitBtn = document.getElementById('submitBtn');
+                submitBtn.disabled = true;
+                submitBtn.innerText = "Syncing with Command Alpha...";
+
+                const payload = {
+                    province: document.getElementById('province').value,
+                    constituency: document.getElementById('constituency').value,
+                    topIssue: document.getElementById('topIssue').value,
+                    sentimentScore: Number(document.querySelector('input[name="sentiment"]:checked').value),
+                    comments: document.getElementById('comments').value,
+                    spamCheck: botTrigger // Sent down for backend confirmation evaluation
+                };
+
+                try {
+                    await fetch(APPS_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    alert("Zikomo! Telemetry mapped securely.");
+                    document.getElementById('pulseForm').reset();
+                    document.getElementById('constituency').disabled = true;
+                    setTimeout(loadDashboardData, 1200);
+                } catch (error) {
+                    alert("Sync infrastructure delay. Try shortly.");
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Transmit Anonymously";
+                }
+            });
+        });
+
+        async function loadDashboardData() {
+            if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("YOUR_APPS_SCRIPT_WEB_APP_URL")) return;
+            try {
+                const response = await fetch(APPS_SCRIPT_URL);
+                const data = await response.json();
+                renderChart(data.sentimentDistribution);
+                renderCampaignFeed(data.campaignFeed);
+            } catch (error) {}
+        }
+
+        function renderCampaignFeed(posts) {
+            const container = document.getElementById('feedContainer');
+            container.innerHTML = "";
+            if (!posts || posts.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 py-2 text-center">No active alerts running.</p>`;
+                return;
+            }
+            posts.forEach(post => {
+                const div = document.createElement('div');
+                div.className = "p-4 bg-slate-50 rounded-xl border border-slate-150";
+                div.innerHTML = `
+                    <div class="flex items-center gap-2 mb-1.5"><span class="bg-slate-900 text-white text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded-sm">${post.category}</span><span class="text-[10px] text-slate-400">${post.date}</span></div>
+                    <h3 class="text-xs font-bold text-slate-900 mb-1">${post.title}</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed">${post.content}</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function renderChart(distribution) {
+            const ctx = document.getElementById('moodChart').getContext('2d');
+            if (moodChartInstance) { moodChartInstance.destroy(); }
+            moodChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Angry', 'Worried', 'Neutral', 'Hopeful', 'Excited'],
+                    datasets: [{
+                        data: [distribution['1']||0, distribution['2']||0, distribution['3']||0, distribution['4']||0, distribution['5']||0],
+                        backgroundColor: ['#f87171', '#fb923c', '#fbbf24', '#60a5fa', '#34d399'],
+                        borderWidth: 3
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 6, usePointStyle: true, font: { size: 10 } } } }, cutout: '76%' }
+            });
+        }
+    </script>
+</body>
+</html>
