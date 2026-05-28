@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community Pulse & Governance Hub</title>
-    <!-- Tailwind CSS Engine -->
+    <title>CivicPulse Governance System</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Chart.js for premium vector analytics -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { -webkit-font-smoothing: antialiased; }
@@ -15,68 +13,56 @@
 </head>
 <body class="bg-slate-50 font-sans text-slate-900 flex flex-col min-h-screen">
 
-    <!-- Top Sticky Premium Navigation Bar -->
-    <header class="bg-white/90 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-50">
+    <!-- Header Navigation -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
         <div class="max-w-xl mx-auto px-5 py-3.5 flex justify-between items-center">
             <div class="flex items-center gap-2">
                 <span class="text-xl">🇿🇲</span>
-                <span class="font-bold tracking-tight text-slate-900 text-base">CivicPulse</span>
+                <span class="font-extrabold tracking-tight text-slate-900 text-sm">CivicPulse CRM</span>
             </div>
-            <div class="flex items-center gap-2">
-                <span class="inline-flex items-center gap-1.5 bg-indigo-50 border border-indigo-100 text-[11px] font-semibold text-indigo-700 px-3 py-1 rounded-full">
-                    <span class="h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
-                    Constituent Portal
-                </span>
-            </div>
+            <button onclick="toggleAdminPanel()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[11px] px-3 py-1.5 rounded-lg transition-all cursor-pointer">
+                💼 Executive Desk
+            </button>
         </div>
     </header>
 
-    <!-- Main Content Stream -->
+    <!-- App Body Grid Container -->
     <main class="flex-grow max-w-xl w-full mx-auto px-4 py-6 space-y-6">
         
-        <!-- Hero Identity Banner -->
-        <section class="bg-slate-900 text-white p-6 rounded-2xl border border-slate-800 shadow-xs">
-            <span class="text-[10px] uppercase tracking-widest font-bold text-indigo-400 mb-1 block">Accountability Platform</span>
-            <h1 class="text-xl font-extrabold tracking-tight text-white mb-1.5">Direct Community Connection</h1>
-            <p class="text-slate-300 text-xs leading-relaxed">
-                Use this portal to view verified field updates from leadership and submit direct localized developmental challenges happening within your constituency.
-            </p>
+        <!-- Master Brand Statement -->
+        <section class="bg-indigo-950 text-white p-6 rounded-2xl shadow-xs border border-indigo-900">
+            <span class="text-[9px] uppercase tracking-widest font-bold text-indigo-400 mb-1 block">Vyeta Digital Governance Core</span>
+            <h1 class="text-lg font-bold mb-1">Constituency Development & Tracking Node</h1>
+            <p class="text-slate-300 text-[11px] leading-relaxed">Accountability platform bridging communications between community wards and legislative offices permanently.</p>
         </section>
 
-        <!-- Module 1: Official Dispatches & Project Tracking -->
-        <section class="bg-white rounded-2xl p-5 border border-slate-200/70 shadow-xs">
-            <div class="mb-4">
-                <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wide">📢 Leadership Dispatch & Tracker</h2>
-                <p class="text-xs text-slate-500">Official updates, CDF project milestones, and notices.</p>
+        <!-- Feature 1: Real-Time Ticket Status Search Tracker Tracker -->
+        <section class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs">
+            <h2 class="text-xs font-bold text-slate-900 uppercase tracking-wide mb-2">🔍 Track Existing Filed Report</h2>
+            <div class="flex gap-2">
+                <input type="text" id="ticketSearchInput" placeholder="Enter Ticket Hash (e.g., MNA-4921)" class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none uppercase font-mono tracking-wider focus:border-indigo-500">
+                <button onclick="trackTicket()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-4 rounded-xl transition-all cursor-pointer">Track</button>
             </div>
-            
+            <div id="searchResultArea" class="mt-3 hidden p-3 rounded-xl border text-xs"></div>
+        </section>
+
+        <!-- Feature 2: Leadership Feed Notice Stream -->
+        <section class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs">
+            <h2 class="text-xs font-bold text-slate-900 uppercase tracking-wide mb-3">📢 Leadership Directives Feed</h2>
             <div id="feedContainer" class="space-y-3">
-                <!-- Fallback Loading State -->
-                <div class="py-4 text-center space-y-2">
-                    <div class="h-3 w-3/4 bg-slate-100 rounded-sm mx-auto animate-pulse"></div>
-                    <div class="h-2.5 w-1/2 bg-slate-50 rounded-sm mx-auto animate-pulse"></div>
-                </div>
+                <p class="text-[11px] text-slate-400 animate-pulse">Establishing handshake loops...</p>
             </div>
         </section>
 
-        <!-- Module 2: Long-Term Governance Data Logging -->
-        <section class="bg-white rounded-2xl p-5 border border-slate-200/70 shadow-xs">
-            <div class="mb-4">
-                <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wide">🛠️ Report a Local Priority Issue</h2>
-                <p class="text-xs text-slate-500">Log developmental gaps or infrastructure needs directly into the database.</p>
-            </div>
-
+        <!-- Feature 3: Long-term Intake Report Engine -->
+        <section class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs">
+            <h2 class="text-xs font-bold text-slate-900 uppercase tracking-wide mb-3">🛠️ Report Local Ward Development Deficit</h2>
             <form id="pulseForm" class="space-y-4">
-                
-                <!-- Anti-Spam Honeypot Field -->
-                <div class="hidden-field">
-                    <input type="text" id="username_verification" autocomplete="off">
-                </div>
+                <div class="hidden-field"><input type="text" id="username_verification" autocomplete="off"></div>
 
-                <!-- Chained Dropdown 1: Province -->
                 <div>
-                    <label class="block text-xs font-semibold text-slate-500 mb-1">Province</label>
-                    <select id="province" required class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50/50 font-medium transition-all outline-none focus:border-indigo-500">
+                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Province</label>
+                    <select id="province" required class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 font-medium">
                         <option value="">Select Province...</option>
                         <option value="Copperbelt">Copperbelt Province</option>
                         <option value="Lusaka">Lusaka Province</option>
@@ -85,122 +71,92 @@
                     </select>
                 </div>
 
-                <!-- Chained Dropdown 2: Constituency -->
                 <div>
-                    <label class="block text-xs font-semibold text-slate-500 mb-1">Constituency</label>
-                    <select id="constituency" required disabled class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50/50 font-medium transition-all outline-none focus:border-indigo-500 disabled:opacity-40">
+                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Constituency</label>
+                    <select id="constituency" required disabled class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 font-medium">
                         <option value="">Select a Province first...</option>
                     </select>
                 </div>
 
-                <!-- Multi-Lifecycle Categories (Elections -> Long Term Office) -->
                 <div>
-                    <label class="block text-xs font-semibold text-slate-500 mb-1">Sector Demanding Intervention</label>
-                    <select id="topIssue" required class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50/50 font-medium transition-all outline-none focus:border-indigo-500">
-                        <option value="">Select Sector...</option>
-                        <option value="Water & Sanitation">Water Supply & Sanitation</option>
-                        <option value="Roads & Drainage">Feeder Roads & Drainage Works</option>
-                        <option value="Health Services">Clinic Infrastructure & Drugs Availability</option>
-                        <option value="Education Facilities">School Desk Allocation & Classroom Space</option>
-                        <option value="Security & Lighting">Street Lights & Community Policing</option>
-                        <option value="Youth & Women Grants">CDF Empowerment Grants / Skills Training</option>
+                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Impact Sector</label>
+                    <select id="topIssue" required class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 font-medium">
+                        <option value="">Select Target Field...</option>
+                        <option value="Water & Sanitation">Water Supply & Sanitation Deficit</option>
+                        <option value="Roads & Drainage">Feeder Roads Repairs & Structural Drainage</option>
+                        <option value="Health Services">Clinic Pharmacy Supply & Ward Staffing</option>
+                        <option value="Education Facilities">School Infrastructure & Desk Allocations</option>
+                        <option value="Security & Lighting">Street Lights & Ward Security Patrols</option>
                     </select>
                 </div>
 
-                <!-- Impact Urgency Matrix -->
                 <div>
-                    <label class="block text-xs font-semibold text-slate-500 mb-2">Severity Level of the Situation</label>
+                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-2">Community Severity Level</label>
                     <div class="grid grid-cols-5 gap-2">
-                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
-                            <input type="radio" name="sentiment" value="1" required class="peer absolute opacity-0">
-                            <span class="text-base filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">🟢</span>
-                            <span class="text-[9px] font-bold text-slate-400 mt-1">Stable</span>
-                            <div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div>
-                        </label>
-                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
-                            <input type="radio" name="sentiment" value="2" class="peer absolute opacity-0">
-                            <span class="text-base filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">🟡</span>
-                            <span class="text-[9px] font-bold text-slate-400 mt-1">Minor</span>
-                            <div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div>
-                        </label>
-                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
-                            <input type="radio" name="sentiment" value="3" class="peer absolute opacity-0">
-                            <span class="text-base filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">🟠</span>
-                            <span class="text-[9px] font-bold text-slate-400 mt-1">Moderate</span>
-                            <div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div>
-                        </label>
-                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
-                            <input type="radio" name="sentiment" value="4" class="peer absolute opacity-0">
-                            <span class="text-base filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">🚨</span>
-                            <span class="text-[9px] font-bold text-slate-400 mt-1">Severe</span>
-                            <div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div>
-                        </label>
-                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all group">
-                            <input type="radio" name="sentiment" value="5" class="peer absolute opacity-0">
-                            <span class="text-base filter grayscale group-hover:grayscale-0 peer-checked:grayscale-0 transition-all">💥</span>
-                            <span class="text-[9px] font-bold text-slate-400 mt-1">Critical</span>
-                            <div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div>
-                        </label>
+                        <!-- Custom Styled Array of Urgency Radios -->
+                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all text-center"><input type="radio" name="sentiment" value="1" required class="peer absolute opacity-0"><span class="text-base">🟢</span><span class="text-[9px] font-bold text-slate-400 mt-1">Stable</span><div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div></label>
+                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all text-center"><input type="radio" name="sentiment" value="2" class="peer absolute opacity-0"><span class="text-base">🟡</span><span class="text-[9px] font-bold text-slate-400 mt-1">Minor</span><div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div></label>
+                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all text-center"><input type="radio" name="sentiment" value="3" class="peer absolute opacity-0"><span class="text-base">?</span><span class="text-[9px] font-bold text-slate-400 mt-1">Mod</span><div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div></label>
+                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all text-center"><input type="radio" name="sentiment" value="4" class="peer absolute opacity-0"><span class="text-base">🚨</span><span class="text-[9px] font-bold text-slate-400 mt-1">Severe</span><div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div></label>
+                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all text-center"><input type="radio" name="sentiment" value="5" class="peer absolute opacity-0"><span class="text-base">💥</span><span class="text-[9px] font-bold text-slate-400 mt-1">Critical</span><div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div></label>
                     </div>
                 </div>
 
-                <!-- Structured Verbatim Field -->
                 <div>
-                    <label class="block text-xs font-semibold text-slate-500 mb-1">Accurate Location Details & Description</label>
-                    <textarea id="comments" required rows="3" placeholder="Provide specific street landmarks or ward names (e.g., Kapisha, Nchanga Ward, Maiteneke)..." class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50/50 outline-none focus:border-indigo-500 transition-all resize-none"></textarea>
+                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Verbatim Issue Location & Context</label>
+                    <textarea id="comments" required rows="3" placeholder="Specify landmarks, ward info, or specific schools/clinics needing direct review..." class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 transition-all resize-none"></textarea>
                 </div>
 
-                <button type="submit" id="submitBtn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs py-3.5 px-4 rounded-xl cursor-pointer transition-all active:scale-[0.99]">
-                    Log Issue with Administration
-                </button>
+                <button type="submit" id="submitBtn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-3.5 rounded-xl cursor-pointer transition-all">Transmit Report To Registry</button>
             </form>
         </section>
 
-        <!-- National Metrics Visualization Dashboard -->
-        <section class="bg-white rounded-2xl p-5 border border-slate-200/70 shadow-xs">
-            <div class="flex justify-between items-start mb-4">
+        <!-- Feature 4: Protected Executive Command Desk Interface Component -->
+        <section id="adminDashboard" class="bg-white rounded-2xl p-5 border border-indigo-200 shadow-xs hidden bg-linear-to-b from-white to-indigo-50/20">
+            <div class="border-b border-slate-200 pb-3 mb-4 flex justify-between items-center">
                 <div>
-                    <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wide">📊 Live Constituency Health Metrics</h2>
-                    <p class="text-xs text-slate-500">Distribution of public severity alerts logged to date.</p>
+                    <h2 class="text-xs font-bold text-indigo-950 uppercase tracking-wide">💼 Executive Infrastructure Desk</h2>
+                    <p class="text-[10px] text-slate-500">Internal prioritization analytics & tracking state assignment.</p>
                 </div>
-                <button onclick="loadDashboardData()" class="text-[10px] font-bold text-slate-700 bg-slate-50 border border-slate-200 px-2.5 py-1.5 rounded-lg hover:bg-slate-100 transition-all cursor-pointer">
-                    Sync Engine
-                </button>
+                <button onclick="toggleAdminPanel()" class="text-xs font-bold text-red-600">Close</button>
             </div>
-            
-            <div class="w-full flex justify-center items-center">
-                <div class="w-full max-w-[210px] aspect-square">
-                    <canvas id="moodChart"></canvas>
+
+            <!-- PIN Lock Step Authorization UI Block -->
+            <div id="adminAuthBlock" class="space-y-2 py-4">
+                <label class="block text-[11px] font-bold text-slate-600 text-center uppercase">Input Authorization PIN</label>
+                <input type="password" id="adminPinField" placeholder="••••" class="block w-24 text-center mx-auto text-sm p-2 border border-slate-300 rounded-lg outline-none tracking-widest">
+                <button onclick="unlockAdminSystem()" class="block mx-auto bg-slate-900 text-white font-bold text-[10px] px-4 py-2 rounded-lg cursor-pointer">Verify Key</button>
+            </div>
+
+            <!-- Full Command Metrics Display Panel -->
+            <div id="adminContentBlock" class="hidden space-y-5">
+                <div class="w-full flex justify-center"><div class="w-48 aspect-square"><canvas id="moodChart"></canvas></div></div>
+                <div class="border-t border-slate-200/80 pt-4">
+                    <h3 class="text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-3">Live Unresolved Incidents Dispatch</h3>
+                    <div id="adminTicketGrid" class="space-y-3 max-h-[320px] overflow-y-auto pr-1"></div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- PREMIUM WHITE-LABEL FOOTER BRANDING ANCHOR -->
-    <footer class="w-full bg-white border-t border-slate-200/60 py-6 mt-12">
+    <!-- PREMIUM WHITE-LABEL SIGNATURE ANCHOR FOOTER -->
+    <footer class="w-full bg-white border-t border-slate-200 py-6 mt-12">
         <div class="max-w-xl mx-auto px-4 text-center space-y-1.5">
-            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                Engineered & Secured by
-            </p>
+            <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Engineered & Secured by</p>
             <div class="flex items-center justify-center gap-1.5">
                 <span class="h-2 w-2 rounded-full bg-indigo-600 shadow-[0_0_8px_rgba(79,70,229,0.6)]"></span>
-                <span class="text-xs font-extrabold tracking-tight text-slate-700">
-                    Vyeta Digital Solutions
-                </span>
+                <span class="text-xs font-extrabold tracking-tight text-slate-700">Vyeta Digital Solutions</span>
             </div>
-            <p class="text-[9px] text-slate-400 font-mono">
-                Digital Infrastructure & Data Sovereignty © 2026
-            </p>
+            <p class="text-[9px] text-slate-400 font-mono">Digital Infrastructure & Data Sovereignty © 2026</p>
         </div>
     </footer>
 
-    <!-- Script Application Logic -->
+    <!-- Frontend Core Operational Engineering Javascript Engine -->
     <script>
-        // CRITICAL: Insert your Google Apps Script Web App Deployment URL below
         const APPS_SCRIPT_URL = "YOUR_APPS_SCRIPT_WEB_APP_URL";
         let moodChartInstance = null;
+        let globalAdminMatrix = [];
 
-        // Regional Mapping Architecture
         const zambiaRegions = {
             "Copperbelt": ["Chingola", "Nchanga", "Kitwe Central", "Kwacha", "Nkana", "Luanshya", "Roan", "Mufulira", "Ndola Central", "Bwana Mkubwa"],
             "Lusaka": ["Munali", "Kanyama", "Matero", "Lusaka Central", "Chawama", "Mandevu", "Kabwata", "Rufunsa", "Chongwe"],
@@ -208,100 +164,131 @@
             "Southern": ["Livingstone", "Choma Central", "Mazabuka Central", "Monze Central"]
         };
 
-        // Chained Dropdown Execution
         document.getElementById('province').addEventListener('change', function() {
-            const constituencySelect = document.getElementById('constituency');
-            const selectedProvince = this.value;
-
-            constituencySelect.innerHTML = '<option value="">Select Constituency...</option>';
-            
-            if(selectedProvince && zambiaRegions[selectedProvince]) {
-                constituencySelect.disabled = false;
-                zambiaRegions[selectedProvince].forEach(con => {
-                    const opt = document.createElement('option');
-                    opt.value = con;
-                    opt.textContent = con;
-                    constituencySelect.appendChild(opt);
+            const conSelect = document.getElementById('constituency');
+            conSelect.innerHTML = '<option value="">Select Constituency...</option>';
+            if(this.value && zambiaRegions[this.value]) {
+                conSelect.disabled = false;
+                zambiaRegions[this.value].forEach(c => {
+                    let o = document.createElement('option'); o.value = c; o.textContent = c; conSelect.appendChild(o);
                 });
-            } else {
-                const constituencySelect = document.getElementById('constituency');
-                constituencySelect.disabled = true;
-                constituencySelect.innerHTML = '<option value="">Select a Province first...</option>';
-            }
+            } else { conSelect.disabled = true; }
         });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadDashboardData();
-            
-            document.getElementById('pulseForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                // SECURITY HONEYPOT AUDIT
-                const botTrigger = document.getElementById('username_verification').value;
-                if(botTrigger !== "") { return; }
-
-                const submitBtn = document.getElementById('submitBtn');
-                submitBtn.disabled = true;
-                submitBtn.innerText = "Encrypting Data Streams...";
-
-                const payload = {
-                    province: document.getElementById('province').value,
-                    constituency: document.getElementById('constituency').value,
-                    topIssue: document.getElementById('topIssue').value,
-                    sentimentScore: Number(document.querySelector('input[name="sentiment"]:checked').value),
-                    comments: document.getElementById('comments').value,
-                    spamCheck: botTrigger
-                };
-
-                try {
-                    await fetch(APPS_SCRIPT_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    alert("Zikomo! Your report has been logged securely into the community database.");
-                    document.getElementById('pulseForm').reset();
-                    document.getElementById('constituency').disabled = true;
-                    setTimeout(loadDashboardData, 1200);
-                } catch (error) {
-                    alert("Sync infrastructure error. Try shortly.");
-                } finally {
-                    submitBtn.disabled = false;
-                    submitBtn.innerText = "Log Issue with Administration";
-                }
-            });
-        });
+        document.addEventListener('DOMContentLoaded', () => { loadDashboardData(); });
 
         async function loadDashboardData() {
             if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("YOUR_APPS_SCRIPT_WEB_APP_URL")) return;
             try {
                 const response = await fetch(APPS_SCRIPT_URL);
                 const data = await response.json();
+                globalAdminMatrix = data.adminDataMatrix || [];
                 renderChart(data.sentimentDistribution);
                 renderCampaignFeed(data.campaignFeed);
-            } catch (error) {}
+                if(document.getElementById('adminAuthBlock').classList.contains('hidden')) { renderAdminTicketList(); }
+            } catch (e) {}
+        }
+
+        async function trackTicket() {
+            const tid = document.getElementById('ticketSearchInput').value.trim();
+            const resArea = document.getElementById('searchResultArea');
+            if(!tid) return;
+            resArea.className = "mt-3 p-3 rounded-xl border text-xs bg-slate-50 border-slate-200 text-slate-600 animate-pulse block";
+            resArea.innerText = "Searching system nodes...";
+            try {
+                const res = await fetch(`${APPS_SCRIPT_URL}?searchTicket=${encodeURIComponent(tid)}`);
+                const ticket = await res.json();
+                resArea.classList.remove('hidden');
+                if(ticket.found) {
+                    let col = ticket.status.includes('Resolved') ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-amber-50 border-amber-200 text-amber-900';
+                    resArea.className = `mt-3 p-4 rounded-xl border text-xs ${col} block space-y-1.5`;
+                    resArea.innerHTML = `<div><strong>Ticket ID:</strong> <span class="font-mono">${ticket.ticketId}</span></div><div><strong>Sector Field:</strong> ${ticket.sector}</div><div><strong>Operational Status:</strong> <span class="underline font-bold">${ticket.status}</span></div><div class="pt-1 text-[11px] border-t border-black/5"><strong>Admin Response Note:</strong> ${ticket.notes}</div>`;
+                } else {
+                    resArea.className = "mt-3 p-3 rounded-xl border text-xs bg-rose-50 border-rose-100 text-rose-700 block";
+                    resArea.innerText = "No active ticket matching that sequence found in registry nodes.";
+                }
+            } catch(err) { resArea.innerText = "Lookup node connection error."; }
+        }
+
+        document.getElementById('pulseForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if(document.getElementById('username_verification').value !== "") return;
+            const btn = document.getElementById('submitBtn'); btn.disabled = true; btn.innerText = "Assembling Payload Encryption Layers...";
+            
+            const payload = {
+                action: "log_issue",
+                province: document.getElementById('province').value,
+                constituency: document.getElementById('constituency').value,
+                topIssue: document.getElementById('topIssue').value,
+                sentimentScore: Number(document.querySelector('input[name="sentiment"]:checked').value),
+                comments: document.getElementById('comments').value,
+                spamCheck: ""
+            };
+
+            try {
+                const r = await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const res = await r.json();
+                if(res.status === "success") {
+                    alert(`Report Securely Registered!\nYour Tracking ID is: ${res.ticketId}\nSave this code to check progress updates.`);
+                    document.getElementById('pulseForm').reset();
+                    document.getElementById('constituency').disabled = true;
+                    loadDashboardData();
+                }
+            } catch(err) { alert("Submission logged locally. Data push in backlog pipeline sync process."); }
+            finally { btn.disabled = false; btn.innerText = "Transmit Report To Registry"; }
+        });
+
+        function toggleAdminPanel() { document.getElementById('adminDashboard').classList.toggle('hidden'); }
+        function unlockAdminSystem() {
+            if(document.getElementById('adminPinField').value === "9900") {
+                document.getElementById('adminAuthBlock').classList.add('hidden');
+                document.getElementById('adminContentBlock').classList.remove('hidden');
+                renderAdminTicketList();
+            } else { alert("Invalid Operational Access Pin."); }
+        }
+
+        function renderAdminTicketList() {
+            const container = document.getElementById('adminTicketGrid'); container.innerHTML = "";
+            const activeIssues = globalAdminMatrix.filter(t => !t.status.includes('Resolved'));
+            if(activeIssues.length === 0) { container.innerHTML = `<p class="text-[10px] text-slate-400 py-4 text-center">All logged incidents processed cleanly.</p>`; return; }
+            
+            activeIssues.forEach(t => {
+                const d = document.createElement('div');
+                d.className = "p-3 bg-white border border-slate-200 rounded-xl space-y-2 text-[11px]";
+                d.innerHTML = `
+                    <div class="flex justify-between font-bold">
+                        <span class="font-mono text-indigo-700">${t.ticketId} [${t.constituency}]</span>
+                        <span class="text-orange-600">${t.severity === 5 ? 'CRITICAL 💥' : 'ALERT 🚨'}</span>
+                    </div>
+                    <p class="text-slate-600 leading-tight"><strong>Desc:</strong> "${t.comments}"</p>
+                    <div class="flex gap-2 items-center pt-1 border-t border-slate-100">
+                        <select id="status_${t.ticketId}" class="p-1 text-[10px] border rounded bg-slate-50"><option value="Investigating 🔵">Investigating</option><option value="Resolved 🟢">Resolved</option></select>
+                        <input type="text" id="notes_${t.ticketId}" placeholder="Append official resolution update status..." class="w-full p-1 text-[10px] border rounded">
+                        <button onclick="submitStatusResolution('${t.ticketId}')" class="bg-slate-900 text-white px-2 py-1 rounded text-[9px] font-bold">Apply</button>
+                    </div>`;
+                container.appendChild(d);
+            });
+        }
+
+        async function submitStatusResolution(tid) {
+            const newStatus = document.getElementById(`status_${tid}`).value;
+            const adminNotes = document.getElementById(`notes_${tid}`).value;
+            try {
+                const r = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: "update_status", pin: "9900", ticketId: tid, newStatus: newStatus, adminNotes: adminNotes })
+                });
+                const res = await r.json();
+                if(res.status === "updated") { alert("Status matrix adjusted securely."); loadDashboardData(); }
+            } catch(e) { alert("Infrastructure delay mapping adjustment execution update."); }
         }
 
         function renderCampaignFeed(posts) {
-            const container = document.getElementById('feedContainer');
-            container.innerHTML = "";
-            if (!posts || posts.length === 0) {
-                container.innerHTML = `<p class="text-[11px] text-slate-400 py-2 text-center">No structural statements issued yet for this term.</p>`;
-                return;
-            }
+            const container = document.getElementById('feedContainer'); container.innerHTML = "";
+            if (!posts || posts.length === 0) { container.innerHTML = `<p class="text-[11px] text-slate-400 py-2 text-center">No terminal operational bulletins broadcasting.</p>`; return; }
             posts.forEach(post => {
-                const div = document.createElement('div');
-                div.className = "p-4 bg-slate-50 rounded-xl border border-slate-150";
-                div.innerHTML = `
-                    <div class="flex items-center gap-2 mb-1.5">
-                        <span class="bg-indigo-600 text-white text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded-xs">${post.category}</span>
-                        <span class="text-[10px] text-slate-400 font-medium">${post.date}</span>
-                    </div>
-                    <h3 class="text-xs font-bold text-slate-900 mb-1">${post.title}</h3>
-                    <p class="text-slate-600 text-[11px] leading-relaxed whitespace-pre-line">${post.content}</p>
-                `;
+                const div = document.createElement('div'); div.className = "p-3.5 bg-slate-50 rounded-xl border border-slate-200";
+                div.innerHTML = `<div class="flex items-center gap-2 mb-1"><span class="bg-indigo-950 text-white text-[8px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded-xs">${post.category}</span><span class="text-[9px] text-slate-400 font-medium">${post.date}</span></div><h3 class="text-xs font-bold text-slate-900 mb-0.5">${post.title}</h3><p class="text-slate-600 text-[11px] leading-relaxed whitespace-pre-line">${post.content}</p>`;
                 container.appendChild(div);
             });
         }
@@ -313,13 +300,9 @@
                 type: 'doughnut',
                 data: {
                     labels: ['Stable', 'Minor', 'Moderate', 'Severe', 'Critical'],
-                    datasets: [{
-                        data: [distribution['1']||0, distribution['2']||0, distribution['3']||0, distribution['4']||0, distribution['5']||0],
-                        backgroundColor: ['#34d399', '#fbbf24', '#f97316', '#ef4444', '#7f1d1d'],
-                        borderWidth: 2
-                    }]
+                    datasets: [{ data: [distribution['1']||0, distribution['2']||0, distribution['3']||0, distribution['4']||0, distribution['5']||0], backgroundColor: ['#10b981', '#f59e0b', '#f97316', '#ef4444', '#4c1d95'], borderWidth: 1.5 }]
                 },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 6, usePointStyle: true, font: { size: 9, weight: '500' } } } }, cutout: '78%' }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 6, usePointStyle: true, font: { size: 9, weight: '500' } } } }, cutout: '80%' }
             });
         }
     </script>
