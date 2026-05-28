@@ -60,22 +60,29 @@
             <form id="pulseForm" class="space-y-4">
                 <div class="hidden-field"><input type="text" id="username_verification" autocomplete="off"></div>
 
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Province</label>
-                    <select id="province" required class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 font-medium">
-                        <option value="">Select Province...</option>
-                        <option value="Copperbelt">Copperbelt Province</option>
-                        <option value="Lusaka">Lusaka Province</option>
-                        <option value="Central">Central Province</option>
-                        <option value="Southern">Southern Province</option>
-                    </select>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Province</label>
+                        <select id="province" required class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 font-medium">
+                            <option value="">Select...</option>
+                            <option value="Copperbelt">Copperbelt Province</option>
+                            <option value="Lusaka">Lusaka Province</option>
+                            <option value="Central">Central Province</option>
+                            <option value="Southern">Southern Province</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Constituency</label>
+                        <select id="constituency" required disabled class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 font-medium">
+                            <option value="">Select Province first...</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Constituency</label>
-                    <select id="constituency" required disabled class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 font-medium">
-                        <option value="">Select a Province first...</option>
-                    </select>
+                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Notification Email Address (Optional)</label>
+                    <input type="email" id="voterEmail" placeholder="yourname@domain.com" class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500">
+                    <p class="text-[10px] text-slate-400 mt-1">Used exclusively to email you status and resolution alerts directly from the desk.</p>
                 </div>
 
                 <div>
@@ -101,6 +108,19 @@
                     </div>
                 </div>
 
+                <!-- Feature 4: Dynamic Infrastructure Proof Image Upload Dropzone -->
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Upload Visual Proof / Evidence (Optional)</label>
+                    <div class="relative border-2 border-dashed border-slate-200 hover:border-indigo-400 rounded-xl p-4 bg-slate-50 text-center transition-all cursor-pointer">
+                        <input type="file" id="evidenceFile" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                        <div class="space-y-1">
+                            <span class="text-lg block">📸</span>
+                            <p id="fileUploadStatus" class="text-[11px] font-medium text-slate-600">Click or Drag photo here to attach evidence payload</p>
+                            <p class="text-[9px] text-slate-400">Supports JPG, PNG, up to 4MB max</p>
+                        </div>
+                    </div>
+                </div>
+
                 <div>
                     <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Verbatim Issue Location & Context</label>
                     <textarea id="comments" required rows="3" placeholder="Specify landmarks, ward info, or specific schools/clinics needing direct review..." class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 transition-all resize-none"></textarea>
@@ -110,7 +130,7 @@
             </form>
         </section>
 
-        <!-- Feature 4: Protected Executive Command Desk Panel -->
+        <!-- Feature 5: Protected Executive Command Desk Panel -->
         <section id="adminDashboard" class="bg-white rounded-2xl p-5 border border-indigo-200 shadow-xs hidden bg-linear-to-b from-white to-indigo-50/20">
             <div class="border-b border-slate-200 pb-3 mb-4 flex justify-between items-center">
                 <div>
@@ -138,7 +158,7 @@
         </section>
     </main>
 
-    <!-- PREMIUM WHITE-LABEL SIGNATURE ANCHOR FOOTER -->
+    <!-- WHITE-LABEL FOOTER -->
     <footer class="w-full bg-white border-t border-slate-200 py-6 mt-12">
         <div class="max-w-xl mx-auto px-4 text-center space-y-1.5">
             <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Engineered & Secured by</p>
@@ -150,9 +170,8 @@
         </div>
     </footer>
 
-    <!-- Frontend Core Engineering Script -->
+    <!-- Frontend Engineering Script -->
     <script>
-        // CRITICAL: Insert your fresh Google Apps Script Web App URL below
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx6i-MdrJPh3-czEfA-DH_6cwCMW_QCNJ_1JRy_qwzTjhhXYc5oOcUUdSrP2qA7-qdOhA/exec";
         let moodChartInstance = null;
         let globalAdminMatrix = [];
@@ -163,6 +182,18 @@
             "Central": ["Kabwe Central", "Bwacha", "Chisamba", "Kapiri Mposhi", "Mumbwa"],
             "Southern": ["Livingstone", "Choma Central", "Mazabuka Central", "Monze Central"]
         };
+
+        // Handle File Selection Preview Text
+        document.getElementById('evidenceFile').addEventListener('change', function(e) {
+            const statusLabel = document.getElementById('fileUploadStatus');
+            if(this.files && this.files[0]) {
+                statusLabel.innerText = `📎 Linked: ${this.files[0].name} (${(this.files[0].size/1024/1024).toFixed(2)} MB)`;
+                statusLabel.classList.add('text-indigo-600');
+            } else {
+                statusLabel.innerText = "Click or Drag photo here to attach evidence payload";
+                statusLabel.classList.remove('text-indigo-600');
+            }
+        });
 
         document.getElementById('province').addEventListener('change', function() {
             const conSelect = document.getElementById('constituency');
@@ -201,8 +232,9 @@
                 resArea.classList.remove('hidden');
                 if(ticket.found) {
                     let col = ticket.status.includes('Resolved') ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-amber-50 border-amber-200 text-amber-900';
+                    let imgMarkup = ticket.evidenceUrl ? `<div class="pt-2"><a href="${ticket.evidenceUrl}" target="_blank" class="text-indigo-600 hover:underline font-bold">🖼️ View Attached Visual Evidence Folder</a></div>` : '';
                     resArea.className = `mt-3 p-4 rounded-xl border text-xs ${col} block space-y-1.5`;
-                    resArea.innerHTML = `<div><strong>Ticket ID:</strong> <span class="font-mono">${ticket.ticketId}</span></div><div><strong>Sector Field:</strong> ${ticket.sector}</div><div><strong>Operational Status:</strong> <span class="underline font-bold">${ticket.status}</span></div><div class="pt-1 text-[11px] border-t border-black/5"><strong>Admin Response Note:</strong> ${ticket.notes}</div>`;
+                    resArea.innerHTML = `<div><strong>Ticket ID:</strong> <span class="font-mono">${ticket.ticketId}</span></div><div><strong>Sector Field:</strong> ${ticket.sector}</div><div><strong>Operational Status:</strong> <span class="underline font-bold">${ticket.status}</span></div>${imgMarkup}<div class="pt-1 text-[11px] border-t border-black/5"><strong>Admin Response Note:</strong> ${ticket.notes}</div>`;
                 } else {
                     resArea.className = "mt-3 p-3 rounded-xl border text-xs bg-rose-50 border-rose-100 text-rose-700 block";
                     resArea.innerText = "No active ticket matching that sequence found in registry nodes.";
@@ -210,39 +242,58 @@
             } catch(err) { resArea.innerText = "Lookup node connection error."; }
         }
 
+        // Helper Function to convert local file inputs into Base64 strings safely
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result.split(',')[1]); // Keep text payload only
+            reader.onerror = error => reject(error);
+        });
+
         document.getElementById('pulseForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             if(document.getElementById('username_verification').value !== "") return;
-            const btn = document.getElementById('submitBtn'); btn.disabled = true; btn.innerText = "Assembling Payload Encryption Layers...";
+            const btn = document.getElementById('submitBtn'); btn.disabled = true; btn.innerText = "Processing Evidence Packages & Syncing...";
             
-            // PRE-ALLOCATE THE TICKET CODE ON FRONTEND BEFORE TRANSMISSION
             const constituency = document.getElementById('constituency').value;
             const prefix = constituency.substring(0, 3).toUpperCase();
             const generatedTicketId = prefix + "-" + Math.floor(1000 + Math.random() * 9000);
+
+            let fileData = "";
+            let fileName = "";
+            const fileInput = document.getElementById('evidenceFile').files[0];
+            
+            if(fileInput) {
+                try {
+                    fileData = await toBase64(fileInput);
+                    fileName = fileInput.name;
+                } catch(b64err) {
+                    alert("Error preparing image payload, proceeding with text submission.");
+                }
+            }
 
             const payload = {
                 action: "log_issue",
                 ticketId: generatedTicketId,
                 province: document.getElementById('province').value,
                 constituency: constituency,
+                voterEmail: document.getElementById('voterEmail').value.trim(),
                 topIssue: document.getElementById('topIssue').value,
                 sentimentScore: Number(document.querySelector('input[name="sentiment"]:checked').value),
                 comments: document.getElementById('comments').value,
+                fileBase64: fileData,
+                fileName: fileName,
                 spamCheck: ""
             };
 
             try {
-                // FIXED NO-CORS PIPELINE ROUTE
-                await fetch(APPS_SCRIPT_URL, { 
-                    method: 'POST', 
-                    mode: 'no-cors', 
-                    body: JSON.stringify(payload) 
-                });
+                await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
 
-                // REVEAL TICKETING ID EXPLICITLY TO END-USER
-                alert(`📌 Report Securely Registered!\n\nYour unique Tracking ID is: ${generatedTicketId}\n\nSave this code to check progress updates or follow resolution timelines directly from the tracker bar above.`);
+                alert(`📌 Report Securely Registered!\n\nYour unique Tracking ID is: ${generatedTicketId}\n\nSave this code to check progress updates. If you appended an email, updates will fly directly to your inbox.`);
                 
                 document.getElementById('pulseForm').reset();
+                document.getElementById('fileUploadStatus').innerText = "Click or Drag photo here to attach evidence payload";
+                document.getElementById('fileUploadStatus').classList.remove('text-indigo-600');
                 document.getElementById('constituency').disabled = true;
                 setTimeout(loadDashboardData, 2000);
             } catch(err) { 
@@ -270,12 +321,14 @@
             activeIssues.forEach(t => {
                 const d = document.createElement('div');
                 d.className = "p-3 bg-white border border-slate-200 rounded-xl space-y-2 text-[11px]";
+                let evidenceLink = t.evidenceUrl ? `<div class="text-[10px]"><a href="${t.evidenceUrl}" target="_blank" class="text-indigo-600 underline font-bold">🖼️ Open Attached Image Evidence</a></div>` : '';
                 d.innerHTML = `
                     <div class="flex justify-between font-bold">
                         <span class="font-mono text-indigo-700">${t.ticketId} [${t.constituency}]</span>
                         <span class="text-orange-600">${t.severity === 5 ? 'CRITICAL 💥' : 'ALERT 🚨'}</span>
                     </div>
                     <p class="text-slate-600 leading-tight"><strong>Desc:</strong> "${t.comments}"</p>
+                    ${evidenceLink}
                     <div class="flex gap-2 items-center pt-1 border-t border-slate-100">
                         <select id="status_${t.ticketId}" class="p-1 text-[10px] border rounded bg-slate-50"><option value="Investigating 🔵">Investigating</option><option value="Resolved 🟢">Resolved</option></select>
                         <input type="text" id="notes_${t.ticketId}" placeholder="Append resolution notes..." class="w-full p-1 text-[10px] border rounded">
@@ -293,7 +346,7 @@
                     method: 'POST', mode: 'no-cors',
                     body: JSON.stringify({ action: "update_status", pin: "9900", ticketId: tid, newStatus: newStatus, adminNotes: adminNotes })
                 });
-                alert("Status adjustments dispatched."); 
+                alert("Status adjustments dispatched and citizen email notification executed."); 
                 setTimeout(loadDashboardData, 1500);
             } catch(e) { alert("Infrastructure delay mapping adjustment."); }
         }
