@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CivicPulse Governance System</title>
+    <title>CivicPulse Community Portal</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -15,13 +15,13 @@
 
     <!-- Header Navigation -->
     <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
-        <div class="max-w-xl mx-auto px-5 py-3.5 flex justify-between items-center">
+        <div class="max-w-xl mx-auto px-5 py-4 flex justify-between items-center">
             <div class="flex items-center gap-2">
                 <span class="text-xl">🇿🇲</span>
-                <span class="font-extrabold tracking-tight text-slate-900 text-sm">CivicPulse CRM</span>
+                <span class="font-extrabold tracking-tight text-slate-900 text-sm">CivicPulse Portal</span>
             </div>
-            <button onclick="toggleAdminPanel()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[11px] px-3 py-1.5 rounded-lg transition-all cursor-pointer">
-                💼 Executive Desk
+            <button onclick="toggleAdminPanel()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs px-3.5 py-2 rounded-xl transition-all cursor-pointer flex items-center gap-1">
+                🏛️ Leader Dashboard
             </button>
         </div>
     </header>
@@ -30,41 +30,41 @@
     <main class="flex-grow max-w-xl w-full mx-auto px-4 py-6 space-y-6">
         
         <!-- Master Brand Statement -->
-        <section class="bg-indigo-950 text-white p-6 rounded-2xl shadow-xs border border-indigo-900">
-            <span class="text-[9px] uppercase tracking-widest font-bold text-indigo-400 mb-1 block">Vyeta Digital Governance Core</span>
-            <h1 class="text-lg font-bold mb-1">Constituency Development & Tracking Node</h1>
-            <p class="text-slate-300 text-[11px] leading-relaxed">Accountability platform bridging communications between community wards and legislative offices permanently.</p>
+        <section class="bg-gradient-to-br from-indigo-950 to-slate-900 text-white p-6 rounded-2xl shadow-md border border-indigo-950/50">
+            <span class="text-[10px] uppercase tracking-widest font-bold text-indigo-300 mb-1 block">Zambian Community Voice Platform</span>
+            <h1 class="text-xl font-black mb-1.5 tracking-tight">Constituency Service & Issue Tracker</h1>
+            <p class="text-slate-300 text-xs leading-relaxed font-medium">A direct, secure channel connecting local residents across our wards with leadership to track development and solve neighborhood challenges together.</p>
         </section>
 
         <!-- Feature 1: Real-Time Ticket Status Search Tracker -->
-        <section class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs">
-            <h2 class="text-xs font-bold text-slate-900 uppercase tracking-wide mb-2">🔍 Track Existing Filed Report</h2>
+        <section class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+            <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">🔍 Track an Existing Report</h2>
             <div class="flex gap-2">
-                <input type="text" id="ticketSearchInput" placeholder="Enter Ticket Hash (e.g., MNA-4921)" class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none uppercase font-mono tracking-wider focus:border-indigo-500">
-                <button onclick="trackTicket()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-4 rounded-xl transition-all cursor-pointer">Track</button>
+                <input type="text" id="ticketSearchInput" placeholder="Enter Tracking ID (e.g., MNA-4921)" class="w-full text-xs p-3.5 border border-slate-200 rounded-xl bg-slate-50/50 outline-none uppercase font-mono tracking-wider focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition-all">
+                <button onclick="trackTicket()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-5 rounded-xl transition-all cursor-pointer shadow-sm shadow-indigo-200">Search</button>
             </div>
             <div id="searchResultArea" class="mt-3 hidden p-3 rounded-xl border text-xs"></div>
         </section>
 
         <!-- Feature 2: Leadership Feed Notice Stream -->
-        <section class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs">
-            <h2 class="text-xs font-bold text-slate-900 uppercase tracking-wide mb-3">📢 Leadership Directives Feed</h2>
+        <section class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm">
+            <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3.5 flex items-center gap-1.5">📢 Official Community Announcements</h2>
             <div id="feedContainer" class="space-y-3">
-                <p class="text-[11px] text-slate-400 animate-pulse">Establishing handshake loops...</p>
+                <p class="text-xs text-slate-400 animate-pulse flex items-center gap-1.5">Checking bulletin board updates...</p>
             </div>
         </section>
 
         <!-- Feature 3: Long-term Intake Report Engine -->
-        <section class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs">
-            <h2 class="text-xs font-bold text-slate-900 uppercase tracking-wide mb-3">🛠️ Report Local Ward Development Deficit</h2>
+        <section class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm">
+            <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 flex items-center gap-1.5">🛠️ Report a Community Issue</h2>
             <form id="pulseForm" class="space-y-4">
                 <div class="hidden-field"><input type="text" id="username_verification" autocomplete="off"></div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Province</label>
-                        <select id="province" required class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 font-medium">
-                            <option value="">Select...</option>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5">Province</label>
+                        <select id="province" required class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition-all font-medium text-slate-800">
+                            <option value="">Select Province...</option>
                             <option value="Copperbelt">Copperbelt Province</option>
                             <option value="Lusaka">Lusaka Province</option>
                             <option value="Central">Central Province</option>
@@ -72,86 +72,86 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Constituency</label>
-                        <select id="constituency" required disabled class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 font-medium">
-                            <option value="">Select Province first...</option>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5">Constituency</label>
+                        <select id="constituency" required disabled class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition-all font-medium text-slate-800">
+                            <option value="">Choose Province first...</option>
                         </select>
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Notification Email Address (Optional)</label>
-                    <input type="email" id="voterEmail" placeholder="yourname@domain.com" class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500">
-                    <p class="text-[10px] text-slate-400 mt-1">Used exclusively to email you status and resolution alerts directly from the desk.</p>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Your Email Address <span class="text-slate-400 font-normal">(Optional)</span></label>
+                    <input type="email" id="voterEmail" placeholder="name@example.com" class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition-all">
+                    <p class="text-[11px] text-slate-400 mt-1">We will only use this to send you real-time status updates and resolution notes.</p>
                 </div>
 
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Impact Sector</label>
-                    <select id="topIssue" required class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 font-medium">
-                        <option value="">Select Target Field...</option>
-                        <option value="Water & Sanitation">Water Supply & Sanitation Deficit</option>
-                        <option value="Roads & Drainage">Feeder Roads Repairs & Structural Drainage</option>
-                        <option value="Health Services">Clinic Pharmacy Supply & Ward Staffing</option>
-                        <option value="Education Facilities">School Infrastructure & Desk Allocations</option>
-                        <option value="Security & Lighting">Street Lights & Ward Security Patrols</option>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">What type of issue is this?</label>
+                    <select id="topIssue" required class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition-all font-medium text-slate-800">
+                        <option value="">Select a Category...</option>
+                        <option value="Water & Sanitation">Water Supply & Sanitation</option>
+                        <option value="Roads & Drainage">Road Repairs & Neighborhood Drainage</option>
+                        <option value="Health Services">Clinic Infrastructure, Medicine & Staffing</option>
+                        <option value="Education Facilities">School Buildings & Desk Shortages</option>
+                        <option value="Security & Lighting">Street Lights & Public Security</option>
                     </select>
                 </div>
 
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-2">Community Severity Level</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-2">How severely does this affect the community?</label>
                     <div class="grid grid-cols-5 gap-2">
-                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all text-center"><input type="radio" name="sentiment" value="1" required class="peer absolute opacity-0"><span class="text-base">🟢</span><span class="text-[9px] font-bold text-slate-400 mt-1">Stable</span><div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div></label>
-                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all text-center"><input type="radio" name="sentiment" value="2" class="peer absolute opacity-0"><span class="text-base">🟡</span><span class="text-[9px] font-bold text-slate-400 mt-1">Minor</span><div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div></label>
-                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all text-center"><input type="radio" name="sentiment" value="3" class="peer absolute opacity-0"><span class="text-base">😐</span><span class="text-[9px] font-bold text-slate-400 mt-1">Mod</span><div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div></label>
-                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all text-center"><input type="radio" name="sentiment" value="4" class="peer absolute opacity-0"><span class="text-base">🚨</span><span class="text-[9px] font-bold text-slate-400 mt-1">Severe</span><div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div></label>
-                        <label class="relative flex flex-col items-center p-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all text-center"><input type="radio" name="sentiment" value="5" class="peer absolute opacity-0"><span class="text-base">💥</span><span class="text-[9px] font-bold text-slate-400 mt-1">Critical</span><div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div></label>
+                        <label class="relative flex flex-col items-center p-2.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all text-center"><input type="radio" name="sentiment" value="1" required class="peer absolute opacity-0"><span class="text-base">🟢</span><span class="text-[10px] font-bold text-slate-500 mt-1">Stable</span><div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div></label>
+                        <label class="relative flex flex-col items-center p-2.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all text-center"><input type="radio" name="sentiment" value="2" class="peer absolute opacity-0"><span class="text-base">🟡</span><span class="text-[10px] font-bold text-slate-500 mt-1">Minor</span><div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div></label>
+                        <label class="relative flex flex-col items-center p-2.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all text-center"><input type="radio" name="sentiment" value="3" class="peer absolute opacity-0"><span class="text-base">😐</span><span class="text-[10px] font-bold text-slate-500 mt-1">Moderate</span><div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div></label>
+                        <label class="relative flex flex-col items-center p-2.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all text-center"><input type="radio" name="sentiment" value="4" class="peer absolute opacity-0"><span class="text-base">🚨</span><span class="text-[10px] font-bold text-slate-500 mt-1">Severe</span><div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div></label>
+                        <label class="relative flex flex-col items-center p-2.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all text-center"><input type="radio" name="sentiment" value="5" class="peer absolute opacity-0"><span class="text-base">💥</span><span class="text-[10px] font-bold text-slate-500 mt-1">Critical</span><div class="absolute inset-0 border-2 border-transparent peer-checked:border-slate-900 rounded-xl pointer-events-none"></div></label>
                     </div>
                 </div>
 
                 <!-- Feature 4: Dynamic Infrastructure Proof Image Upload Dropzone -->
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Upload Visual Proof / Evidence (Optional)</label>
-                    <div class="relative border-2 border-dashed border-slate-200 hover:border-indigo-400 rounded-xl p-4 bg-slate-50 text-center transition-all cursor-pointer">
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Attach a Photo <span class="text-slate-400 font-normal">(Optional)</span></label>
+                    <div class="relative border-2 border-dashed border-slate-200 hover:border-indigo-400 rounded-xl p-4.5 bg-slate-50/50 text-center transition-all cursor-pointer">
                         <input type="file" id="evidenceFile" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
                         <div class="space-y-1">
-                            <span class="text-lg block">📸</span>
-                            <p id="fileUploadStatus" class="text-[11px] font-medium text-slate-600">Click or Drag photo here to attach evidence payload</p>
-                            <p class="text-[9px] text-slate-400">Supports JPG, PNG, up to 4MB max</p>
+                            <span class="text-xl block">📸</span>
+                            <p id="fileUploadStatus" class="text-xs font-semibold text-slate-700">Click or Drag a photo here to add visual proof</p>
+                            <p class="text-[10px] text-slate-400">Supports image formats up to 4MB max</p>
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Verbatim Issue Location & Context</label>
-                    <textarea id="comments" required rows="3" placeholder="Specify landmarks, ward info, or specific schools/clinics needing direct review..." class="w-full text-xs p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 transition-all resize-none"></textarea>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Detailed Description & Exact Location</label>
+                    <textarea id="comments" required rows="3.5" placeholder="Please list names of landmarks, specific roads, schools, or clinics so the team can locate and review the issue easily..." class="w-full text-xs p-3.5 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition-all resize-none leading-relaxed text-slate-800"></textarea>
                 </div>
 
-                <button type="submit" id="submitBtn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-3.5 rounded-xl cursor-pointer transition-all">Transmit Report To Registry</button>
+                <button type="submit" id="submitBtn" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm py-3.5 rounded-xl cursor-pointer transition-all shadow-sm">Submit Report to Office</button>
             </form>
         </section>
 
         <!-- Feature 5: Protected Executive Command Desk Panel -->
-        <section id="adminDashboard" class="bg-white rounded-2xl p-5 border border-indigo-200 shadow-xs hidden bg-linear-to-b from-white to-indigo-50/20">
+        <section id="adminDashboard" class="bg-white rounded-2xl p-5 border border-indigo-200 shadow-sm hidden bg-linear-to-b from-white to-indigo-50/20">
             <div class="border-b border-slate-200 pb-3 mb-4 flex justify-between items-center">
                 <div>
-                    <h2 class="text-xs font-bold text-indigo-950 uppercase tracking-wide">💼 Executive Infrastructure Desk</h2>
-                    <p class="text-[10px] text-slate-500">Internal prioritization analytics & tracking state assignment.</p>
+                    <h2 class="text-xs font-bold text-indigo-950 uppercase tracking-wider">💼 Leadership Desk</h2>
+                    <p class="text-[11px] text-slate-500">Internal management dashboard and case assignment logs.</p>
                 </div>
-                <button onclick="toggleAdminPanel()" class="text-xs font-bold text-red-600">Close</button>
+                <button onclick="toggleAdminPanel()" class="text-xs font-bold text-red-600 hover:underline">Close Dashboard</button>
             </div>
 
             <!-- PIN Lock Authorization UI Block -->
             <div id="adminAuthBlock" class="space-y-2 py-4">
-                <label class="block text-[11px] font-bold text-slate-600 text-center uppercase">Input Authorization PIN</label>
-                <input type="password" id="adminPinField" placeholder="••••" class="block w-24 text-center mx-auto text-sm p-2 border border-slate-300 rounded-lg outline-none tracking-widest">
-                <button onclick="unlockAdminSystem()" class="block mx-auto bg-slate-900 text-white font-bold text-[10px] px-4 py-2 rounded-lg cursor-pointer">Verify Key</button>
+                <label class="block text-xs font-bold text-slate-600 text-center uppercase tracking-wide">Enter Admin PIN</label>
+                <input type="password" id="adminPinField" placeholder="••••" class="block w-24 text-center mx-auto text-sm p-2 border border-slate-300 rounded-lg outline-none tracking-widest bg-slate-50 focus:bg-white focus:border-indigo-500">
+                <button onclick="unlockAdminSystem()" class="block mx-auto bg-slate-900 text-white font-bold text-[11px] px-5 py-2 rounded-lg cursor-pointer mt-2">Verify Authorization</button>
             </div>
 
             <!-- Command Metrics Display Panel -->
             <div id="adminContentBlock" class="hidden space-y-5">
                 <div class="w-full flex justify-center"><div class="w-48 aspect-square"><canvas id="moodChart"></canvas></div></div>
                 <div class="border-t border-slate-200/80 pt-4">
-                    <h3 class="text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-3">Live Unresolved Incidents Dispatch</h3>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">Live Active Incident Dispatch</h3>
                     <div id="adminTicketGrid" class="space-y-3 max-h-[320px] overflow-y-auto pr-1"></div>
                 </div>
             </div>
@@ -160,13 +160,13 @@
 
     <!-- WHITE-LABEL FOOTER -->
     <footer class="w-full bg-white border-t border-slate-200 py-6 mt-12">
-        <div class="max-w-xl mx-auto px-4 text-center space-y-1.5">
-            <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400">Engineered & Secured by</p>
+        <div class="max-w-xl mx-auto px-4 text-center space-y-2">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Developed & Secured By</p>
             <div class="flex items-center justify-center gap-1.5">
                 <span class="h-2 w-2 rounded-full bg-indigo-600 shadow-[0_0_8px_rgba(79,70,229,0.6)]"></span>
-                <span class="text-xs font-extrabold tracking-tight text-slate-700">Vyeta Digital Solutions</span>
+                <span class="text-xs font-extrabold tracking-tight text-slate-800">Vyeta Digital Solutions</span>
             </div>
-            <p class="text-[9px] text-slate-400 font-mono">Digital Infrastructure & Data Sovereignty © 2026</p>
+            <p class="text-[10px] text-slate-400 font-mono">Community Infrastructure Platform © 2026</p>
         </div>
     </footer>
 
@@ -190,7 +190,7 @@
                 statusLabel.innerText = `📎 Linked: ${this.files[0].name} (${(this.files[0].size/1024/1024).toFixed(2)} MB)`;
                 statusLabel.classList.add('text-indigo-600');
             } else {
-                statusLabel.innerText = "Click or Drag photo here to attach evidence payload";
+                statusLabel.innerText = "Click or Drag a photo here to add visual proof";
                 statusLabel.classList.remove('text-indigo-600');
             }
         });
@@ -225,21 +225,21 @@
             const resArea = document.getElementById('searchResultArea');
             if(!tid) return;
             resArea.className = "mt-3 p-3 rounded-xl border text-xs bg-slate-50 border-slate-200 text-slate-600 animate-pulse block";
-            resArea.innerText = "Searching system nodes...";
+            resArea.innerText = "Searching system files...";
             try {
                 const res = await fetch(`${APPS_SCRIPT_URL}?searchTicket=${encodeURIComponent(tid)}`);
                 const ticket = await res.json();
                 resArea.classList.remove('hidden');
                 if(ticket.found) {
                     let col = ticket.status.includes('Resolved') ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-amber-50 border-amber-200 text-amber-900';
-                    let imgMarkup = ticket.evidenceUrl ? `<div class="pt-2"><a href="${ticket.evidenceUrl}" target="_blank" class="text-indigo-600 hover:underline font-bold">🖼️ View Attached Visual Evidence Folder</a></div>` : '';
+                    let imgMarkup = ticket.evidenceUrl ? `<div class="pt-2"><a href="${ticket.evidenceUrl}" target="_blank" class="text-indigo-600 hover:underline font-bold">🖼️ Open Attached Evidence Folder</a></div>` : '';
                     resArea.className = `mt-3 p-4 rounded-xl border text-xs ${col} block space-y-1.5`;
-                    resArea.innerHTML = `<div><strong>Ticket ID:</strong> <span class="font-mono">${ticket.ticketId}</span></div><div><strong>Sector Field:</strong> ${ticket.sector}</div><div><strong>Operational Status:</strong> <span class="underline font-bold">${ticket.status}</span></div>${imgMarkup}<div class="pt-1 text-[11px] border-t border-black/5"><strong>Admin Response Note:</strong> ${ticket.notes}</div>`;
+                    resArea.innerHTML = `<div><strong>Tracking ID:</strong> <span class="font-mono">${ticket.ticketId}</span></div><div><strong>Category:</strong> ${ticket.sector}</div><div><strong>Current Status:</strong> <span class="underline font-bold">${ticket.status}</span></div>${imgMarkup}<div class="pt-1 text-[11px] border-t border-black/5"><strong>Office Response:</strong> ${ticket.notes}</div>`;
                 } else {
                     resArea.className = "mt-3 p-3 rounded-xl border text-xs bg-rose-50 border-rose-100 text-rose-700 block";
-                    resArea.innerText = "No active ticket matching that sequence found in registry nodes.";
+                    resArea.innerText = "We couldn't find a report matching that Tracking ID. Please check the text and try again.";
                 }
-            } catch(err) { resArea.innerText = "Lookup node connection error."; }
+            } catch(err) { resArea.innerText = "Connection error. Please try again."; }
         }
 
         // Helper Function to convert local file inputs into Base64 strings safely
@@ -253,7 +253,7 @@
         document.getElementById('pulseForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             if(document.getElementById('username_verification').value !== "") return;
-            const btn = document.getElementById('submitBtn'); btn.disabled = true; btn.innerText = "Processing Evidence Packages & Syncing...";
+            const btn = document.getElementById('submitBtn'); btn.disabled = true; btn.innerText = "Saving attachments & submitting report...";
             
             const constituency = document.getElementById('constituency').value;
             const prefix = constituency.substring(0, 3).toUpperCase();
@@ -289,17 +289,17 @@
             try {
                 await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
 
-                alert(`📌 Report Securely Registered!\n\nYour unique Tracking ID is: ${generatedTicketId}\n\nSave this code to check progress updates. If you appended an email, updates will fly directly to your inbox.`);
+                alert(`📌 Report Submitted Successfully!\n\nYour unique Tracking ID is: ${generatedTicketId}\n\nPlease save this tracking ID code to verify future updates. If you added your email address, notices will be sent straight to your inbox.`);
                 
                 document.getElementById('pulseForm').reset();
-                document.getElementById('fileUploadStatus').innerText = "Click or Drag photo here to attach evidence payload";
+                document.getElementById('fileUploadStatus').innerText = "Click or Drag a photo here to add visual proof";
                 document.getElementById('fileUploadStatus').classList.remove('text-indigo-600');
                 document.getElementById('constituency').disabled = true;
                 setTimeout(loadDashboardData, 2000);
             } catch(err) { 
                 alert("Submission logged into background buffer."); 
             } finally { 
-                btn.disabled = false; btn.innerText = "Transmit Report To Registry"; 
+                btn.disabled = false; btn.innerText = "Submit Report to Office"; 
             }
         });
 
@@ -310,18 +310,18 @@
                 document.getElementById('adminAuthBlock').classList.add('hidden');
                 document.getElementById('adminContentBlock').classList.remove('hidden');
                 renderAdminTicketList();
-            } else { alert("Invalid Operational Access Pin."); }
+            } else { alert("Invalid access PIN code."); }
         }
 
         function renderAdminTicketList() {
             const container = document.getElementById('adminTicketGrid'); container.innerHTML = "";
             const activeIssues = globalAdminMatrix.filter(t => !t.status.includes('Resolved'));
-            if(activeIssues.length === 0) { container.innerHTML = `<p class="text-[10px] text-slate-400 py-4 text-center">All logged incidents processed cleanly.</p>`; return; }
+            if(activeIssues.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">All logged incidents processed cleanly.</p>`; return; }
             
             activeIssues.forEach(t => {
                 const d = document.createElement('div');
-                d.className = "p-3 bg-white border border-slate-200 rounded-xl space-y-2 text-[11px]";
-                let evidenceLink = t.evidenceUrl ? `<div class="text-[10px]"><a href="${t.evidenceUrl}" target="_blank" class="text-indigo-600 underline font-bold">🖼️ Open Attached Image Evidence</a></div>` : '';
+                d.className = "p-3 bg-white border border-slate-200 rounded-xl space-y-2 text-xs";
+                let evidenceLink = t.evidenceUrl ? `<div class="text-[11px]"><a href="${t.evidenceUrl}" target="_blank" class="text-indigo-600 underline font-bold">🖼️ Open Attached Image Evidence</a></div>` : '';
                 d.innerHTML = `
                     <div class="flex justify-between font-bold">
                         <span class="font-mono text-indigo-700">${t.ticketId} [${t.constituency}]</span>
@@ -330,9 +330,9 @@
                     <p class="text-slate-600 leading-tight"><strong>Desc:</strong> "${t.comments}"</p>
                     ${evidenceLink}
                     <div class="flex gap-2 items-center pt-1 border-t border-slate-100">
-                        <select id="status_${t.ticketId}" class="p-1 text-[10px] border rounded bg-slate-50"><option value="Investigating 🔵">Investigating</option><option value="Resolved 🟢">Resolved</option></select>
-                        <input type="text" id="notes_${t.ticketId}" placeholder="Append resolution notes..." class="w-full p-1 text-[10px] border rounded">
-                        <button onclick="submitStatusResolution('${t.ticketId}')" class="bg-slate-900 text-white px-2 py-1 rounded text-[9px] font-bold cursor-pointer">Apply</button>
+                        <select id="status_${t.ticketId}" class="p-1 text-[11px] border rounded bg-slate-50"><option value="Investigating 🔵">Investigating</option><option value="Resolved 🟢">Resolved</option></select>
+                        <input type="text" id="notes_${t.ticketId}" placeholder="Append resolution notes..." class="w-full p-1 text-[11px] border rounded">
+                        <button onclick="submitStatusResolution('${t.ticketId}')" class="bg-slate-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">Apply</button>
                     </div>`;
                 container.appendChild(d);
             });
@@ -346,17 +346,17 @@
                     method: 'POST', mode: 'no-cors',
                     body: JSON.stringify({ action: "update_status", pin: "9900", ticketId: tid, newStatus: newStatus, adminNotes: adminNotes })
                 });
-                alert("Status adjustments dispatched and citizen email notification executed."); 
+                alert("Status adjustments saved and updates pushed successfully."); 
                 setTimeout(loadDashboardData, 1500);
-            } catch(e) { alert("Infrastructure delay mapping adjustment."); }
+            } catch(e) { alert("Error saving status change."); }
         }
 
         function renderCampaignFeed(posts) {
             const container = document.getElementById('feedContainer'); container.innerHTML = "";
-            if (!posts || posts.length === 0) { container.innerHTML = `<p class="text-[11px] text-slate-400 py-2 text-center">No terminal operational bulletins broadcasting.</p>`; return; }
+            if (!posts || posts.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 py-2 text-center">No community notices at this time.</p>`; return; }
             posts.forEach(post => {
                 const div = document.createElement('div'); div.className = "p-3.5 bg-slate-50 rounded-xl border border-slate-200";
-                div.innerHTML = `<div class="flex items-center gap-2 mb-1"><span class="bg-indigo-950 text-white text-[8px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded-xs">${post.category}</span><span class="text-[9px] text-slate-400 font-medium">${post.date}</span></div><h3 class="text-xs font-bold text-slate-900 mb-0.5">${post.title}</h3><p class="text-slate-600 text-[11px] leading-relaxed whitespace-pre-line">${post.content}</p>`;
+                div.innerHTML = `<div class="flex items-center gap-2 mb-1"><span class="bg-indigo-950 text-white text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded-sm">${post.category}</span><span class="text-[10px] text-slate-400 font-medium">${post.date}</span></div><h3 class="text-xs font-bold text-slate-900 mb-0.5">${post.title}</h3><p class="text-slate-600 text-xs leading-relaxed whitespace-pre-line">${post.content}</p>`;
                 container.appendChild(div);
             });
         }
