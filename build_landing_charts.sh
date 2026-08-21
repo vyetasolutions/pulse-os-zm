@@ -81,17 +81,17 @@ export default function LandingStats() {
     <div className="space-y-6">
       {/* Stat cards — always meaningful, even at low volume */}
       <div className="grid grid-cols-4 gap-2">
-        <StatCard label="Reports" value={summary.total_issues} />
-        <StatCard label="Resolved" value={summary.resolved_count} />
-        <StatCard label="Resolution Rate" value={`${summary.resolution_rate_pct}%`} />
-        <StatCard label="Overdue" value={summary.overdue_count} tone={summary.overdue_count > 0 ? 'warn' : 'default'} />
+        <StatCard label="Requests" value={summary.total_issues} />
+        <StatCard label="Fixed" value={summary.resolved_count} />
+        <StatCard label="Response Rate" value={`${summary.resolution_rate_pct}%`} />
+        <StatCard label="Needs Attention" value={summary.overdue_count} tone={summary.overdue_count > 0 ? 'warn' : 'default'} />
       </div>
 
       {/* Donut: resolved vs pending — only when there's something to show */}
       {summary.total_issues > 0 ? (
         <div className="bg-white rounded-2xl border border-slate-200 p-4">
           <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-            Resolution Status
+            Getting Things Fixed
           </h3>
           <div className="w-full h-40">
             <ResponsiveContainer>
@@ -116,8 +116,8 @@ export default function LandingStats() {
         </div>
       ) : (
         <EmptyState
-          title="Be the first to report an issue"
-          subtitle="This platform is just getting started — your report puts your constituency on the map."
+          title="Be the first to try it out"
+          subtitle="Let your local office know what needs fixing — it only takes a minute."
         />
       )}
 
@@ -125,7 +125,7 @@ export default function LandingStats() {
       {activeConstituencies.length > 0 ? (
         <div className="bg-white rounded-2xl border border-slate-200 p-4">
           <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">
-            Constituency Resolution Rates
+            Top Performing Offices
           </h3>
           <div className="w-full h-52">
             <ResponsiveContainer>
@@ -146,8 +146,8 @@ export default function LandingStats() {
         </div>
       ) : (
         <EmptyState
-          title="No constituencies with reports yet"
-          subtitle="Sign up and put your constituency on the leaderboard first."
+          title="No activity yet"
+          subtitle="Be the first constituency to show what fast, responsive service looks like."
         />
       )}
     </div>
