@@ -1,3 +1,40 @@
+#!/bin/bash
+set -e
+
+echo "== Installing recharts =="
+npm install recharts
+
+mkdir -p src/lib src/components
+
+# ------------------------------------------------------------
+# Data fetching helper
+# ------------------------------------------------------------
+cat > src/lib/accountability.js << 'EOF'
+import { supabase } from './supabase'
+
+export async function fetchPlatformSummary() {
+  const { data, error } = await supabase
+    .from('platform_accountability_summary')
+    .select('*')
+    .single()
+  if (error) throw error
+  return data
+}
+
+export async function fetchConstituencyLeaderboard() {
+  const { data, error } = await supabase
+    .from('constituency_accountability')
+    .select('*')
+    .order('resolution_rate_pct', { ascending: false, nullsFirst: false })
+  if (error) throw error
+  return data
+}
+EOF
+
+# ------------------------------------------------------------
+# LandingStats component with real charts + graceful empty states
+# ------------------------------------------------------------
+cat > src/components/LandingStats.jsx << 'EOF'
 import { useEffect, useState } from 'react'
 import {
   PieChart, Pie, Cell, ResponsiveContainer, Tooltip,
@@ -137,3 +174,10 @@ function EmptyState({ title, subtitle }) {
     </div>
   )
 }
+EOF
+
+echo ""
+echo "== Done =="
+echo "src/lib/accountability.js and src/components/LandingStats.jsx have been rewritten."
+echo "Since LandingStats.jsx already existed and is likely imported in AuthScreen.jsx,"
+echo "no import changes should be needed — same component name, same export shape."
