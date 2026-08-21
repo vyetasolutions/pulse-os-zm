@@ -8,10 +8,6 @@ import MyReports from './pages/MyReports'
 import StaffDashboard from './pages/StaffDashboard'
 import PublicAccountability from './pages/PublicAccountability'
 import RoleManagement from './pages/RoleManagement'
-import ResetPassword from './pages/ResetPassword'
-import UpdatePassword from './pages/UpdatePassword'
-import PrivacyPolicy from './pages/PrivacyPolicy'
-import DataPolicy from './pages/DataPolicy'
 
 const STAFF_ROLES = ['officer', 'constituency_admin', 'platform_admin']
 const ADMIN_ROLES = ['constituency_admin', 'platform_admin']
@@ -125,8 +121,6 @@ function AuthenticatedApp() {
           <Route path="/roles" element={<RoleManagement session={session} profile={profile} />} />
         )}
         <Route path="/public" element={<PublicAccountability />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/data-policy" element={<DataPolicy />} />
         <Route path="*" element={<Navigate to="/reports" replace />} />
       </Routes>
       <div className="max-w-2xl mx-auto px-4 mt-4 flex justify-between items-center">
@@ -146,13 +140,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Fully public routes - reachable without any auth check */}
         <Route path="/public" element={<PublicAccountability />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/data-policy" element={<DataPolicy />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/update-password" element={<UpdatePassword />} />
-        {/* Everything else goes through the authenticated app */}
         <Route path="/*" element={<AuthenticatedApp />} />
       </Routes>
     </BrowserRouter>
