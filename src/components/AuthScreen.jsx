@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import PasswordInput from './PasswordInput'
+import LandingStats from './LandingStats'
 import logoFull from '../assets/logo-full.png'
 
 export default function AuthScreen({ onAuthed }) {
-  const [mode, setMode] = useState('login') // 'login' | 'signup'
+  const [mode, setMode] = useState('login')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fullName, setFullName] = useState('')
@@ -32,65 +33,68 @@ export default function AuthScreen({ onAuthed }) {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <img src={logoFull} alt="Civic Pulse" className="h-16 mx-auto object-contain mb-4" />
-        <h1 className="text-xl font-black text-slate-900 mb-1">
-          {mode === 'signup' ? 'Create your account' : 'Welcome back'}
-        </h1>
-        <p className="text-xs text-slate-500 mb-5">
-          {mode === 'signup'
-            ? 'Report issues, track progress, help your community.'
-            : 'Sign in to continue.'}
-        </p>
-        <form onSubmit={handleSubmit} className="space-y-3">
-          {mode === 'signup' && (
+    <div className="min-h-screen bg-slate-50">
+      <LandingStats />
+      <div className="flex items-center justify-center px-4 py-6">
+        <div className="w-full max-w-sm bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+          <img src={logoFull} alt="Civic Pulse" className="h-14 mx-auto object-contain mb-4" />
+          <h1 className="text-xl font-black text-slate-900 mb-1">
+            {mode === 'signup' ? 'Create your account' : 'Welcome back'}
+          </h1>
+          <p className="text-xs text-slate-500 mb-5">
+            {mode === 'signup'
+              ? 'Report issues, track progress, help your community.'
+              : 'Sign in to continue.'}
+          </p>
+          <form onSubmit={handleSubmit} className="space-y-3">
+            {mode === 'signup' && (
+              <input
+                type="text"
+                placeholder="Your name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+                className="w-full text-sm p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 focus:bg-white"
+              />
+            )}
             <input
-              type="text"
-              placeholder="Your name"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              type="email"
+              placeholder="Email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full text-sm p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 focus:bg-white"
             />
-          )}
-          <input
-            type="email"
-            placeholder="Email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full text-sm p-3 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 focus:bg-white"
-          />
-          <PasswordInput
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            className="w-full text-sm p-3 pr-16 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 focus:bg-white"
-          />
-          {mode === 'login' && (
-            <a href="/reset-password" className="block text-right text-[11px] text-indigo-600 font-bold">
-              Forgot password?
-            </a>
-          )}
-          {error && <p className="text-xs text-rose-600">{error}</p>}
+            <PasswordInput
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              className="w-full text-sm p-3 pr-16 border border-slate-200 rounded-xl bg-slate-50 outline-none focus:border-indigo-500 focus:bg-white"
+            />
+            {mode === 'login' && (
+              <a href="/reset-password" className="block text-right text-[11px] text-indigo-600 font-bold">
+                Forgot password?
+              </a>
+            )}
+            {error && <p className="text-xs text-rose-600">{error}</p>}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm py-3 rounded-xl transition-all disabled:opacity-50"
+            >
+              {loading ? 'Please wait...' : mode === 'signup' ? 'Create account' : 'Sign in'}
+            </button>
+          </form>
           <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm py-3 rounded-xl transition-all disabled:opacity-50"
+            onClick={() => setMode(mode === 'signup' ? 'login' : 'signup')}
+            className="w-full text-center text-xs text-indigo-600 font-bold mt-4"
           >
-            {loading ? 'Please wait...' : mode === 'signup' ? 'Create account' : 'Sign in'}
+            {mode === 'signup' ? 'Already have an account? Sign in' : "New here? Create an account"}
           </button>
-        </form>
-        <button
-          onClick={() => setMode(mode === 'signup' ? 'login' : 'signup')}
-          className="w-full text-center text-xs text-indigo-600 font-bold mt-4"
-        >
-          {mode === 'signup' ? 'Already have an account? Sign in' : "New here? Create an account"}
-        </button>
-        <div className="flex justify-center gap-3 mt-5 pt-4 border-t border-slate-100">
-          <a href="/privacy" className="text-[10px] text-slate-400 underline">Privacy Policy</a>
-          <a href="/data-policy" className="text-[10px] text-slate-400 underline">Data Policy</a>
+          <div className="flex justify-center gap-3 mt-5 pt-4 border-t border-slate-100">
+            <a href="/privacy" className="text-[10px] text-slate-400 underline">Privacy Policy</a>
+            <a href="/data-policy" className="text-[10px] text-slate-400 underline">Data Policy</a>
+          </div>
         </div>
       </div>
     </div>

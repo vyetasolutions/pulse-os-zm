@@ -16,7 +16,7 @@ import DataPolicy from './pages/DataPolicy'
 const STAFF_ROLES = ['officer', 'constituency_admin', 'platform_admin']
 const ADMIN_ROLES = ['constituency_admin', 'platform_admin']
 
-function NavBar({ isStaff, isAdmin, email, profile, onSignOut }) {
+function NavBar({ isStaff, isAdmin, email, onSignOut }) {
   const location = useLocation()
   const tab = (path) =>
     `flex-1 text-center py-2 text-xs font-bold rounded-xl whitespace-nowrap px-3 ${
@@ -32,7 +32,7 @@ function NavBar({ isStaff, isAdmin, email, profile, onSignOut }) {
         <Link to="/public" className={tab('/public')}>Public</Link>
       </div>
       <div className="flex justify-between items-center px-1">
-        <p className="text-[10px] text-slate-400 truncate">Hi, {profile?.full_name?.split(' ')[0] || email}</p>
+        <p className="text-[10px] text-slate-400 truncate">{email}</p>
         <button
           onClick={onSignOut}
           className="text-[10px] font-bold text-rose-600 underline shrink-0 ml-2"
@@ -123,7 +123,7 @@ function AuthenticatedApp() {
 
   return (
     <div className="min-h-screen bg-slate-50 pb-8">
-      <NavBar isStaff={isStaff} isAdmin={isAdmin} email={session.user.email} profile={profile} onSignOut={() => supabase.auth.signOut()} />
+      <NavBar isStaff={isStaff} isAdmin={isAdmin} email={session.user.email} onSignOut={() => supabase.auth.signOut()} />
       <Routes>
         <Route path="/report" element={<ReportIssue session={session} profile={profile} />} />
         <Route path="/reports" element={<MyReports session={session} />} />
