@@ -1,0 +1,172 @@
+import { useEffect, useState } from 'react'
+import {
+  fetchConstituencyIssues,
+  updateIssueStatus,
+  fetchAccountability,
+  fetchEscalations
+} from '../lib/issues'
+import ReferralPanel from '../components/ReferralPanel'
+
+const STATUSES = ['pending', 'acknowledged', 'in_progress', 'resolved', 'reopened', 'closed_duplicate']
+
+const statusColors = {
+  pending: 'bg-amber-50 text-amber-700 border-amber-200',
+  acknowledged: 'bg-blue-50 text-blue-700 border-blue-200',
+  in_progress: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+  resolved: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  reopened: 'bg-rose-50 text-rose-700 border-rose-200',
+  closed_duplicate: 'bg-slate-50 text-slate-500 border-slate-200'
+}
+
+export default function StaffDashboard({ session, profile }) {
+  const [issues, setIssues] = useState([])
+  const [metrics, setMetrics] = useState(null)
+  const [escalations, setEscalations] = useState([])
+  const [filter, setFilter] = useState('all')
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [busyId, setBusyId] = useState(null)
+
+  const isPlatformAdmin = profile.role === 'platform_admin'
+
+  useEffect(() => {
+    load()
+  }, [filter])
+
+  async function load() {
+    setLoading(true)
+    setError('')
+    try {
+      const [issueData, metricData, escalationData] = await Promise.all([
+        fetchConstituencyIssues(profile.constituency_id, filter),
+        fetchAccountability(isPlatformAdmin ? null : profile.constituency_id),
+        fetchEscalations(isPlatformAdmin ? null : profile.constituency_id)
+      ])
+      setIssues(issueData)
+      setMetrics(metricData)
+      setEscalations(escalationData)
+    } catch (e) {
+      setError(e.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function handleStatusChange(issue, newStatus) {
+    setBusyId(issue.id)
+    try {
+      await updateIssueStatus(issue.id, newStatus, issue.status, session.user.id, null)
+      await load()
+    } catch (e) {
+      setError(e.message)
+    } finally {
+      setBusyId(null)
+    }
+  }
+
+  const escalatedIds = new Set(escalations.map((e) => e.issue_id))
+
+  return (
+    <div className="min-h-screen bg-slate-50 px-4 py-6">
+      <div className="max-w-2xl mx-auto space-y-6">
+        <h1 className="text-lg font-black text-slate-900">Staff Dashboard</h1>
+
+        {escalations.length > 0 && (
+          <div className="bg-rose-50 border border-rose-200 rounded-2xl p-4">
+            <p className="text-xs font-black text-rose-700 mb-1">
+              ⚠️ {escalations.length} ticket{escalations.length > 1 ? 's' : ''} past SLA
+            </p>
+            <p className="text-[10px] text-rose-500">
+              {escalations.filter((e) => e.escalation_level === 'platform_admin').length} escalated to platform admin,{' '}
+              {escalations.filter((e) => e.escalation_level === 'constituency_admin').length} to constituency admin
+            </p>
+          </div>
+        )}
+
+        {metrics && (
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {metrics.map((m) => (
+              <div key={m.constituency_id} className="bg-white rounded-2xl border border-slate-200 p-4">
+                <p className="text-[10px] font-bold text-slate-400 uppercase mb-2">{m.constituency_name}</p>
+                <p className="text-2xl font-black text-slate-900">{m.resolution_rate_pct ?? 0}%</p>
+                <p className="text-[10px] text-slate-500 mb-2">resolution rate</p>
+                <div className="flex justify-between text-[10px] text-slate-400">
+                  <span>{m.total_issues} total</span>
+                  <span className="text-rose-500 font-bold">{m.overdue_count} overdue</span>
+                </div>
+                {m.avg_resolution_hours && (
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    avg {Math.round(m.avg_resolution_hours / 24)}d to resolve
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="flex gap-2 overflow-x-auto pb-1">
+          {['all', ...STATUSES].map((s) => (
+            <button
+              key={s}
+              onClick={() => setFilter(s)}
+              className={`whitespace-nowrap text-xs font-bold px-3 py-2 rounded-xl border ${
+                filter === s ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-500 border-slate-200'
+              }`}
+            >
+              {s.replace('_', ' ')}
+            </button>
+          ))}
+        </div>
+
+        {error && <p className="text-xs text-rose-600">{error}</p>}
+        {loading && <p className="text-xs text-slate-400">Loading...</p>}
+
+        <div className="space-y-3">
+          {issues.map((issue) => (
+            <div
+              key={issue.id}
+              className={`bg-white rounded-2xl border p-4 space-y-2 ${
+                escalatedIds.has(issue.id) ? 'border-rose-300' : 'border-slate-200'
+              }`}
+            >
+              <div className="flex justify-between items-start">
+                <div>
+                  <span className="font-mono text-xs font-bold text-indigo-700">{issue.ticket_code}</span>
+                  {escalatedIds.has(issue.id) && (
+                    <span className="ml-2 text-[9px] font-black text-rose-600">⚠ OVERDUE</span>
+                  )}
+                  <p className="text-[10px] text-slate-400">
+                    {issue.is_incognito ? 'Anonymous' : issue.profiles?.full_name || 'Unknown'} · severity {issue.severity}
+                  </p>
+                </div>
+                <span className={`text-[10px] font-bold px-2 py-1 rounded-full border ${statusColors[issue.status] || ''}`}>
+                  {issue.status.replace('_', ' ')}
+                </span>
+              </div>
+              <p className="text-xs text-slate-600">{issue.description || 'No description added.'}</p>
+              {issue.photo_url && (
+                <img src={issue.photo_url} alt="evidence" className="rounded-xl max-h-40 object-cover" />
+              )}
+              <div className="flex gap-2 flex-wrap pt-1">
+                {STATUSES.filter((s) => s !== issue.status).map((s) => (
+                  <button
+                    key={s}
+                    disabled={busyId === issue.id}
+                    onClick={() => handleStatusChange(issue, s)}
+                    className="text-[10px] font-bold px-2 py-1.5 rounded-lg border border-slate-200 text-slate-600 disabled:opacity-40"
+                  >
+                    → {s.replace('_', ' ')}
+                  </button>
+                ))}
+              </div>
+              <ReferralPanel issue={issue} session={session} onReferred={load} />
+            </div>
+          ))}
+          {!loading && issues.length === 0 && (
+            <p className="text-xs text-slate-400 text-center py-8">No issues match this filter.</p>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}

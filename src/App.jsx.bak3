@@ -6,7 +6,6 @@ import ConstituencyPicker from './components/ConstituencyPicker'
 import ReportIssue from './pages/ReportIssue'
 import MyReports from './pages/MyReports'
 import StaffDashboard from './pages/StaffDashboard'
-import PublicAccountability from './pages/PublicAccountability'
 
 const STAFF_ROLES = ['officer', 'constituency_admin', 'platform_admin']
 
@@ -22,13 +21,12 @@ function NavBar({ isStaff }) {
         <Link to="/reports" className={tab('/reports')}>My Reports</Link>
         <Link to="/report" className={tab('/report')}>New Report</Link>
         {isStaff && <Link to="/staff" className={tab('/staff')}>Staff</Link>}
-        <Link to="/public" className={tab('/public')}>Public</Link>
       </div>
     </div>
   )
 }
 
-function AuthenticatedApp() {
+function App() {
   const [session, setSession] = useState(null)
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -65,6 +63,7 @@ function AuthenticatedApp() {
       return
     }
     const flatProfile = { ...data, constituency_name: data.constituencies?.name || null }
+    console.log('Profile loaded:', flatProfile)
     setProfile(flatProfile)
     setDebugError(null)
     setLoading(false)
@@ -105,41 +104,27 @@ function AuthenticatedApp() {
   const isStaff = STAFF_ROLES.includes(profile.role)
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-8">
-      <NavBar isStaff={isStaff} />
-      <Routes>
-        <Route path="/report" element={<ReportIssue session={session} profile={profile} />} />
-        <Route path="/reports" element={<MyReports session={session} />} />
-        {isStaff && (
-          <Route path="/staff" element={<StaffDashboard session={session} profile={profile} />} />
-        )}
-        <Route path="/public" element={<PublicAccountability />} />
-        <Route path="*" element={<Navigate to="/reports" replace />} />
-      </Routes>
-      <div className="max-w-2xl mx-auto px-4 mt-4 flex justify-between items-center">
-        <p className="text-[10px] text-slate-400">{session.user.email} · {profile.role}</p>
-        <button
-          onClick={() => supabase.auth.signOut()}
-          className="text-[10px] font-bold text-slate-500 underline"
-        >
-          Sign out
-        </button>
-      </div>
-    </div>
-  )
-}
-
-function App() {
-  return (
     <BrowserRouter>
-      <Routes>
-        {/* Public route — reachable without any auth check at all */}
-        <Route path="/public" element={<PublicAccountability />} />
-        {/* Everything else goes through the authenticated app, which
-            handles its own /public route too so the nav bar/back button
-            works consistently once logged in */}
-        <Route path="/*" element={<AuthenticatedApp />} />
-      </Routes>
+      <div className="min-h-screen bg-slate-50 pb-8">
+        <NavBar isStaff={isStaff} />
+        <Routes>
+          <Route path="/report" element={<ReportIssue session={session} profile={profile} />} />
+          <Route path="/reports" element={<MyReports session={session} />} />
+          {isStaff && (
+            <Route path="/staff" element={<StaffDashboard session={session} profile={profile} />} />
+          )}
+          <Route path="*" element={<Navigate to="/reports" replace />} />
+        </Routes>
+        <div className="max-w-2xl mx-auto px-4 mt-4 flex justify-between items-center">
+          <p className="text-[10px] text-slate-400">{session.user.email} · {profile.role}</p>
+          <button
+            onClick={() => supabase.auth.signOut()}
+            className="text-[10px] font-bold text-slate-500 underline"
+          >
+            Sign out
+          </button>
+        </div>
+      </div>
     </BrowserRouter>
   )
 }
