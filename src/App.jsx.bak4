@@ -7,12 +7,10 @@ import ReportIssue from './pages/ReportIssue'
 import MyReports from './pages/MyReports'
 import StaffDashboard from './pages/StaffDashboard'
 import PublicAccountability from './pages/PublicAccountability'
-import RoleManagement from './pages/RoleManagement'
 
 const STAFF_ROLES = ['officer', 'constituency_admin', 'platform_admin']
-const ADMIN_ROLES = ['constituency_admin', 'platform_admin']
 
-function NavBar({ isStaff, isAdmin }) {
+function NavBar({ isStaff }) {
   const location = useLocation()
   const tab = (path) =>
     `flex-1 text-center py-2 text-xs font-bold rounded-xl ${
@@ -20,11 +18,10 @@ function NavBar({ isStaff, isAdmin }) {
     }`
   return (
     <div className="max-w-2xl mx-auto px-4 pt-4">
-      <div className="flex gap-2 bg-white border border-slate-200 rounded-2xl p-1 overflow-x-auto">
+      <div className="flex gap-2 bg-white border border-slate-200 rounded-2xl p-1">
         <Link to="/reports" className={tab('/reports')}>My Reports</Link>
         <Link to="/report" className={tab('/report')}>New Report</Link>
         {isStaff && <Link to="/staff" className={tab('/staff')}>Staff</Link>}
-        {isAdmin && <Link to="/roles" className={tab('/roles')}>Roles</Link>}
         <Link to="/public" className={tab('/public')}>Public</Link>
       </div>
     </div>
@@ -106,19 +103,15 @@ function AuthenticatedApp() {
   }
 
   const isStaff = STAFF_ROLES.includes(profile.role)
-  const isAdmin = ADMIN_ROLES.includes(profile.role)
 
   return (
     <div className="min-h-screen bg-slate-50 pb-8">
-      <NavBar isStaff={isStaff} isAdmin={isAdmin} />
+      <NavBar isStaff={isStaff} />
       <Routes>
         <Route path="/report" element={<ReportIssue session={session} profile={profile} />} />
         <Route path="/reports" element={<MyReports session={session} />} />
         {isStaff && (
           <Route path="/staff" element={<StaffDashboard session={session} profile={profile} />} />
-        )}
-        {isAdmin && (
-          <Route path="/roles" element={<RoleManagement session={session} profile={profile} />} />
         )}
         <Route path="/public" element={<PublicAccountability />} />
         <Route path="*" element={<Navigate to="/reports" replace />} />
@@ -140,7 +133,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public route — reachable without any auth check at all */}
         <Route path="/public" element={<PublicAccountability />} />
+        {/* Everything else goes through the authenticated app, which
+            handles its own /public route too so the nav bar/back button
+            works consistently once logged in */}
         <Route path="/*" element={<AuthenticatedApp />} />
       </Routes>
     </BrowserRouter>
